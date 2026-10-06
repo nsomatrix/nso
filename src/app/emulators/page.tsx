@@ -199,128 +199,130 @@ export default function EmulatorsPage() {
       <Header />
 
       <main className="main-content section-container">
-        <div className="page-header">
-          <h1 className="page-title">Emulators</h1>
-          <p className="page-subtitle">
-            Download verified J2ME and Java Emulators for Android and Desktop platforms. Select versions directly from GitHub.
-          </p>
-        </div>
-
-        {/* Filter Controls & Search */}
-        <div className="controls-row">
-          <div className="filter-tabs">
-            <button
-              className={`filter-btn ${platformFilter === "all" ? "active" : ""}`}
-              onClick={() => setPlatformFilter("all")}
-            >
-              All ({INITIAL_EMULATORS.length})
-            </button>
-            <button
-              className={`filter-btn ${platformFilter === "mobile" ? "active" : ""}`}
-              onClick={() => setPlatformFilter("mobile")}
-            >
-              Phone ({mobileCount})
-            </button>
-            <button
-              className={`filter-btn ${platformFilter === "desktop" ? "active" : ""}`}
-              onClick={() => setPlatformFilter("desktop")}
-            >
-              Desktop ({desktopCount})
-            </button>
+        <div className="page-glass-wall">
+          <div className="page-header">
+            <h1 className="page-title">Emulators</h1>
+            <p className="page-subtitle">
+              Download verified J2ME and Java Emulators for Android and Desktop platforms. Select versions directly from GitHub.
+            </p>
           </div>
 
-          <div className="search-box">
-            <input
-              type="text"
-              placeholder="Search Emulators"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="search-input"
-            />
-          </div>
-        </div>
-
-        {/* Emulators Data Table */}
-        <div className="table-wrapper">
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Emulator</th>
-                <th>Version</th>
-                <th>Size</th>
-                <th>Platform</th>
-                <th className="text-right">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredEmulators.map((emu) => {
-                const releases = emu.githubRepo ? githubReleases[emu.githubRepo] || [] : [];
-                const currentDownloadUrl = selectedUrls[emu.name] || emu.downloadUrl;
-
-                return (
-                  <tr key={emu.name}>
-                    <td className="col-name">
-                      <div className="emulator-item-info">
-                        <Image
-                          src={emu.icon}
-                          alt={emu.name}
-                          width={32}
-                          height={32}
-                          className="emulator-icon"
-                          unoptimized
-                        />
-                        <span className="emulator-name">{emu.name}</span>
-                      </div>
-                    </td>
-                    <td className="col-version">
-                      <span className="mobile-label">Version</span>
-                      {emu.hasVersions ? (
-                        <CustomVersionSelect
-                          releases={releases}
-                          currentUrl={currentDownloadUrl}
-                          onSelect={(url) =>
-                            setSelectedUrls((prev) => ({
-                              ...prev,
-                              [emu.name]: url,
-                            }))
-                          }
-                        />
-                      ) : (
-                        <span className="font-mono text-muted">{emu.version}</span>
-                      )}
-                    </td>
-                    <td className="col-size">
-                      <span className="mobile-label">Size</span>
-                      <span className="font-mono text-muted">{emu.size}</span>
-                    </td>
-                    <td className="col-platform">
-                      <span className="mobile-label">Platform</span>
-                      <span
-                        className={`platform-tag-icon ${emu.platform}`}
-                        title={emu.platform === "desktop" ? "Desktop Platform" : "Phone / Mobile Platform"}
-                        aria-label={emu.platform === "desktop" ? "Desktop" : "Phone"}
-                      >
-                        {emu.platform === "desktop" ? (
-                          <MonitorIcon size={18} />
-                        ) : (
-                          <SmartphoneIcon size={18} />
-                        )}
-                      </span>
-                    </td>
-                    <td className="col-action">
-                      <DownloadButton url={currentDownloadUrl || ""} filename={emu.name} />
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-
-          {filteredEmulators.length === 0 && (
-            <div className="empty-state">
-              <p>No emulators found matching your criteria.</p>
+          {/* Filter Controls & Search */}
+          <div className="controls-row">
+            <div className="filter-tabs">
+              <button
+                className={`filter-btn ${platformFilter === "all" ? "active" : ""}`}
+                onClick={() => setPlatformFilter("all")}
+              >
+                All ({INITIAL_EMULATORS.length})
+              </button>
+              <button
+                className={`filter-btn ${platformFilter === "mobile" ? "active" : ""}`}
+                onClick={() => setPlatformFilter("mobile")}
+              >
+                Phone ({mobileCount})
+              </button>
+              <button
+                className={`filter-btn ${platformFilter === "desktop" ? "active" : ""}`}
+                onClick={() => setPlatformFilter("desktop")}
+              >
+                Desktop ({desktopCount})
+              </button>
             </div>
-          )}
+
+            <div className="search-box">
+              <input
+                type="text"
+                placeholder="Search Emulators"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="search-input"
+              />
+            </div>
+          </div>
+
+          {/* Emulators Data Table */}
+          <div className="table-wrapper">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>Emulator</th>
+                  <th>Version</th>
+                  <th>Size</th>
+                  <th>Platform</th>
+                  <th className="text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredEmulators.map((emu) => {
+                  const releases = emu.githubRepo ? githubReleases[emu.githubRepo] || [] : [];
+                  const currentDownloadUrl = selectedUrls[emu.name] || emu.downloadUrl;
+
+                  return (
+                    <tr key={emu.name}>
+                      <td className="col-name">
+                        <div className="emulator-item-info">
+                          <Image
+                            src={emu.icon}
+                            alt={emu.name}
+                            width={32}
+                            height={32}
+                            className="emulator-icon"
+                            unoptimized
+                          />
+                          <span className="emulator-name">{emu.name}</span>
+                        </div>
+                      </td>
+                      <td className="col-version">
+                        <span className="mobile-label">Version</span>
+                        {emu.hasVersions ? (
+                          <CustomVersionSelect
+                            releases={releases}
+                            currentUrl={currentDownloadUrl}
+                            onSelect={(url) =>
+                              setSelectedUrls((prev) => ({
+                                ...prev,
+                                [emu.name]: url,
+                              }))
+                            }
+                          />
+                        ) : (
+                          <span className="font-mono text-muted">{emu.version}</span>
+                        )}
+                      </td>
+                      <td className="col-size">
+                        <span className="mobile-label">Size</span>
+                        <span className="font-mono text-muted">{emu.size}</span>
+                      </td>
+                      <td className="col-platform">
+                        <span className="mobile-label">Platform</span>
+                        <span
+                          className={`platform-tag-icon ${emu.platform}`}
+                          title={emu.platform === "desktop" ? "Desktop Platform" : "Phone / Mobile Platform"}
+                          aria-label={emu.platform === "desktop" ? "Desktop" : "Phone"}
+                        >
+                          {emu.platform === "desktop" ? (
+                            <MonitorIcon size={18} />
+                          ) : (
+                            <SmartphoneIcon size={18} />
+                          )}
+                        </span>
+                      </td>
+                      <td className="col-action">
+                        <DownloadButton url={currentDownloadUrl || ""} filename={emu.name} />
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+
+            {filteredEmulators.length === 0 && (
+              <div className="empty-state">
+                <p>No emulators found matching your criteria.</p>
+              </div>
+            )}
+          </div>
         </div>
       </main>
 

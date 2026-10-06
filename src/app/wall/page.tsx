@@ -9,12 +9,14 @@ export default function WallPage() {
     <div className="page-layout">
       <Header />
 
-      <main className="main-content">
-        <div className="hello-card">
-          <h1 className="hello-title">Wall</h1>
-          <p className="hello-subtitle">
-            Coming Soon
-          </p>
+      <main className="main-content section-container">
+        <div className="page-glass-wall">
+          <div className="hello-card">
+            <h1 className="hello-title">Wall</h1>
+            <p className="hello-subtitle">
+              Coming Soon
+            </p>
+          </div>
         </div>
       </main>
 

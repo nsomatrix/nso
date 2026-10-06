@@ -92,97 +92,99 @@ export default function ModsPage() {
       <Header />
 
       <main className="main-content section-container">
-        <div className="page-header">
-          <h1 className="page-title">MODs</h1>
-          <p className="page-subtitle">
-            Browse and Download Ninjamods dynamically synced from the database.
-          </p>
-        </div>
-
-        {/* Search & Filter Controls */}
-        <div className="controls-row">
-          <div className="filter-tabs">
-            <button
-              className={`filter-btn ${filterType === "all" ? "active" : ""}`}
-              onClick={() => setFilterType("all")}
-            >
-              All MODs ({mods.length})
-            </button>
-            <button
-              className={`filter-btn ${filterType === "jar" ? "active" : ""}`}
-              onClick={() => setFilterType("jar")}
-            >
-              .JAR ({jarCount})
-            </button>
-            <button
-              className={`filter-btn ${filterType === "zip" ? "active" : ""}`}
-              onClick={() => setFilterType("zip")}
-            >
-              .ZIP ({zipCount})
-            </button>
+        <div className="page-glass-wall">
+          <div className="page-header">
+            <h1 className="page-title">MODs</h1>
+            <p className="page-subtitle">
+              Browse and Download Ninjamods dynamically synced from the database.
+            </p>
           </div>
 
-          <div className="search-box">
-            <input
-              type="text"
-              placeholder="Search MODs"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="search-input"
-            />
-          </div>
-        </div>
+          {/* Search & Filter Controls */}
+          <div className="controls-row">
+            <div className="filter-tabs">
+              <button
+                className={`filter-btn ${filterType === "all" ? "active" : ""}`}
+                onClick={() => setFilterType("all")}
+              >
+                All MODs ({mods.length})
+              </button>
+              <button
+                className={`filter-btn ${filterType === "jar" ? "active" : ""}`}
+                onClick={() => setFilterType("jar")}
+              >
+                .JAR ({jarCount})
+              </button>
+              <button
+                className={`filter-btn ${filterType === "zip" ? "active" : ""}`}
+                onClick={() => setFilterType("zip")}
+              >
+                .ZIP ({zipCount})
+              </button>
+            </div>
 
-        {/* MODs Data Table */}
-        <div className="table-wrapper">
-          {loading ? (
-            <div className="loading-state">
-              <p>Fetching MODs</p>
+            <div className="search-box">
+              <input
+                type="text"
+                placeholder="Search MODs"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="search-input"
+              />
             </div>
-          ) : error ? (
-            <div className="error-state">
-              <p>{error}</p>
-            </div>
-          ) : (
-            <table className="data-table">
-              <thead>
-                <tr>
-                  <th>MOD File Name</th>
-                  <th>Format</th>
-                  <th>Size</th>
-                  <th className="text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredMods.map((mod) => (
-                  <tr key={mod.name}>
-                    <td className="col-name">
-                      <span className="mod-file-name">{mod.name}</span>
-                    </td>
-                    <td className="col-format">
-                      <span className="mobile-label">Format</span>
-                      <span className={`format-tag ${mod.type}`}>
-                        .{mod.type.toUpperCase()}
-                      </span>
-                    </td>
-                    <td className="col-size">
-                      <span className="mobile-label">Size</span>
-                      <span className="font-mono text-muted">{formatFileSize(mod.size)}</span>
-                    </td>
-                    <td className="col-action">
-                      <DownloadButton url={mod.downloadUrl} filename={mod.name} />
-                    </td>
+          </div>
+
+          {/* MODs Data Table */}
+          <div className="table-wrapper">
+            {loading ? (
+              <div className="loading-state">
+                <p>Fetching MODs</p>
+              </div>
+            ) : error ? (
+              <div className="error-state">
+                <p>{error}</p>
+              </div>
+            ) : (
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>MOD File Name</th>
+                    <th>Format</th>
+                    <th>Size</th>
+                    <th className="text-right">Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
+                </thead>
+                <tbody>
+                  {filteredMods.map((mod) => (
+                    <tr key={mod.name}>
+                      <td className="col-name">
+                        <span className="mod-file-name">{mod.name}</span>
+                      </td>
+                      <td className="col-format">
+                        <span className="mobile-label">Format</span>
+                        <span className={`format-tag ${mod.type}`}>
+                          .{mod.type.toUpperCase()}
+                        </span>
+                      </td>
+                      <td className="col-size">
+                        <span className="mobile-label">Size</span>
+                        <span className="font-mono text-muted">{formatFileSize(mod.size)}</span>
+                      </td>
+                      <td className="col-action">
+                        <DownloadButton url={mod.downloadUrl} filename={mod.name} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
 
-          {!loading && !error && filteredMods.length === 0 && (
-            <div className="empty-state">
-              <p>No MODs found matching your search term.</p>
-            </div>
-          )}
+            {!loading && !error && filteredMods.length === 0 && (
+              <div className="empty-state">
+                <p>No MODs found matching your search term.</p>
+              </div>
+            )}
+          </div>
         </div>
       </main>
 
