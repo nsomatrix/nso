@@ -7,6 +7,7 @@ import { Footer } from "../../components/Footer";
 import { CustomVersionSelect } from "../../components/CustomVersionSelect";
 import { DownloadButton } from "../../components/DownloadButton";
 import { SmartphoneIcon, MonitorIcon } from "../../components/Icons";
+import { getAssetUrl } from "../../utils/assetPath";
 
 export interface EmulatorItem {
   name: string;
@@ -263,7 +264,7 @@ export default function EmulatorsPage() {
                       <td className="col-name">
                         <div className="emulator-item-info">
                           <Image
-                            src={emu.icon}
+                            src={getAssetUrl(emu.icon)}
                             alt={emu.name}
                             width={32}
                             height={32}
@@ -309,7 +310,7 @@ export default function EmulatorsPage() {
                         </span>
                       </td>
                       <td className="col-action">
-                        <DownloadButton url={currentDownloadUrl || ""} filename={emu.name} />
+                        <DownloadButton url={getAssetUrl(currentDownloadUrl || "")} filename={emu.name} />
                       </td>
                     </tr>
                   );

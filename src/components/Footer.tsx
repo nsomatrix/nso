@@ -2,17 +2,16 @@
 
 import React from "react";
 import Image from "next/image";
+import { getAssetUrl } from "../utils/assetPath";
 
 export function Footer() {
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || (process.env.NODE_ENV === "production" ? "/nso" : "");
-
   return (
     <footer className="site-footer">
       <div className="container footer-inner">
         <div className="footer-brand">
           <div className="brand-logo">
             <Image
-              src={`${basePath}/mtx.png`}
+              src={getAssetUrl("/mtx.png")}
               alt="Brand Logo"
               width={140}
               height={42}

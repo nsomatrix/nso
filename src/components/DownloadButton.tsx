@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { DownloadIcon, CheckIcon, SpinnerIcon } from "./Icons";
+import { getAssetUrl } from "../utils/assetPath";
 
 interface DownloadButtonProps {
   url: string;
@@ -30,9 +31,11 @@ export function DownloadButton({ url, filename, disabled }: DownloadButtonProps)
     return <span className="btn-disabled">Unavailable</span>;
   }
 
+  const finalUrl = getAssetUrl(url);
+
   return (
     <a
-      href={url}
+      href={finalUrl}
       download={filename}
       onClick={handleClick}
       className={`btn-download status-${status}`}

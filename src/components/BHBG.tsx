@@ -421,15 +421,27 @@ export function BHBG() {
     accretionDisk.renderOrder = 1;
     scene.add(accretionDisk);
 
-    // Resize Handler
+    // Resize Handler - Ignore minor height shifts caused by mobile address bar show/hide while scrolling
+    let lastWidth = window.innerWidth;
+    let lastHeight = window.innerHeight;
+
     const handleResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+
+      if (Math.abs(w - lastWidth) < 2 && Math.abs(h - lastHeight) < 80) {
+        return;
+      }
+
+      lastWidth = w;
+      lastHeight = h;
+
+      camera.aspect = w / h;
       camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      composer.setSize(window.innerWidth, window.innerHeight);
-      bloomPass.resolution.set(window.innerWidth, window.innerHeight);
-      lensingPass.uniforms.aspectRatio.value =
-        window.innerWidth / window.innerHeight;
+      renderer.setSize(w, h);
+      composer.setSize(w, h);
+      bloomPass.resolution.set(w, h);
+      lensingPass.uniforms.aspectRatio.value = w / h;
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     };
 
@@ -498,8 +510,10 @@ export function BHBG() {
         position: "fixed",
         top: 0,
         left: 0,
-        width: "100vw",
-        height: "100vh",
+        right: 0,
+        bottom: 0,
+        width: "100%",
+        height: "100%",
         zIndex: -1,
         pointerEvents: "none",
         overflow: "hidden",
