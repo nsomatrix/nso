@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { ThemeToggle } from "./ThemeToggle";
 import { SparklesIcon, MenuIcon, CloseIcon } from "./Icons";
 
@@ -11,7 +12,7 @@ export function Header() {
     <header className="site-header">
       <div className="header-inner container">
         {/* Brand Logo */}
-        <a href="/" className="brand-logo">
+        <Link href="/" className="brand-logo">
           <div className="logo-icon-wrapper">
             <SparklesIcon size={18} className="logo-icon" />
           </div>
@@ -19,11 +20,11 @@ export function Header() {
             <span className="logo-title">NextApp</span>
             <span className="logo-badge">App Router</span>
           </div>
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="desktop-nav">
-          <a href="/" className="nav-link active">Home</a>
+          <Link href="/" className="nav-link active">Home</Link>
           <a href="#about" className="nav-link">About</a>
           <a href="#features" className="nav-link">Features</a>
         </nav>
@@ -47,9 +48,9 @@ export function Header() {
       {mobileMenuOpen && (
         <div className="mobile-drawer">
           <nav className="mobile-nav">
-            <a href="/" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-link active">
+            <Link href="/" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-link active">
               Home
-            </a>
+            </Link>
             <a href="#about" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-link">
               About
             </a>

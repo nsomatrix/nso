@@ -1,21 +1,26 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useSyncExternalStore } from "react";
 import { useTheme, ThemeMode } from "../context/ThemeContext";
 import { SunIcon, MoonIcon, MonitorIcon } from "./Icons";
 
+const emptySubscribe = () => () => {};
+
 export function ThemeToggle() {
   const { theme, setTheme, systemTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
 
   if (!mounted) {
     return (
-      <div className="theme-toggle-skeleton" aria-hidden="true">
-        <div className="skeleton-btn"></div>
+      <div className="theme-toggle-container" aria-hidden="true">
+        <div className="theme-toggle-btn">
+          <MonitorIcon size={16} />
+        </div>
       </div>
     );
   }

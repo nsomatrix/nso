@@ -6,7 +6,7 @@ export interface IconProps {
   style?: React.CSSProperties;
 }
 
-export function SunIcon({ className = "", size = 20, style }: IconProps) {
+export function SunIcon({ className = "", size = 18, style }: IconProps) {
   return (
     <svg
       width={size}
@@ -33,7 +33,7 @@ export function SunIcon({ className = "", size = 20, style }: IconProps) {
   );
 }
 
-export function MoonIcon({ className = "", size = 20, style }: IconProps) {
+export function MoonIcon({ className = "", size = 18, style }: IconProps) {
   return (
     <svg
       width={size}
@@ -52,7 +52,7 @@ export function MoonIcon({ className = "", size = 20, style }: IconProps) {
   );
 }
 
-export function MonitorIcon({ className = "", size = 20, style }: IconProps) {
+export function MonitorIcon({ className = "", size = 18, style }: IconProps) {
   return (
     <svg
       width={size}
@@ -73,27 +73,7 @@ export function MonitorIcon({ className = "", size = 20, style }: IconProps) {
   );
 }
 
-export function SmartphoneIcon({ className = "", size = 20, style }: IconProps) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      style={style}
-    >
-      <rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
-      <path d="M12 18h.01" />
-    </svg>
-  );
-}
-
-export function SparklesIcon({ className = "", size = 20, style }: IconProps) {
+export function SparklesIcon({ className = "", size = 18, style }: IconProps) {
   return (
     <svg
       width={size}
@@ -116,128 +96,7 @@ export function SparklesIcon({ className = "", size = 20, style }: IconProps) {
   );
 }
 
-export function ZapIcon({ className = "", size = 20, style }: IconProps) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      style={style}
-    >
-      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-    </svg>
-  );
-}
-
-export function ShieldCheckIcon({ className = "", size = 20, style }: IconProps) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      style={style}
-    >
-      <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
-      <path d="m9 12 2 2 4-4" />
-    </svg>
-  );
-}
-
-export function PaletteIcon({ className = "", size = 20, style }: IconProps) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      style={style}
-    >
-      <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
-      <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
-      <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
-      <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
-      <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.7-.75 1.7-1.7 0-.42-.16-.82-.42-1.12-.26-.3-.42-.7-.42-1.13 0-.95.78-1.73 1.73-1.73H17c2.76 0 5-2.24 5-5 0-5.5-4.5-10-10-10z" />
-    </svg>
-  );
-}
-
-export function CopyIcon({ className = "", size = 20, style }: IconProps) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      style={style}
-    >
-      <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
-      <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
-    </svg>
-  );
-}
-
-export function CheckIcon({ className = "", size = 20, style }: IconProps) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      style={style}
-    >
-      <path d="M20 6 9 17l-5-5" />
-    </svg>
-  );
-}
-
-export function CodeIcon({ className = "", size = 20, style }: IconProps) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      style={style}
-    >
-      <polyline points="16 18 22 12 16 6" />
-      <polyline points="8 6 2 12 8 18" />
-    </svg>
-  );
-}
-
-export function MenuIcon({ className = "", size = 20, style }: IconProps) {
+export function MenuIcon({ className = "", size = 18, style }: IconProps) {
   return (
     <svg
       width={size}
@@ -258,7 +117,7 @@ export function MenuIcon({ className = "", size = 20, style }: IconProps) {
   );
 }
 
-export function CloseIcon({ className = "", size = 20, style }: IconProps) {
+export function CloseIcon({ className = "", size = 18, style }: IconProps) {
   return (
     <svg
       width={size}
@@ -274,42 +133,6 @@ export function CloseIcon({ className = "", size = 20, style }: IconProps) {
     >
       <path d="M18 6 6 18" />
       <path d="m6 6 12 12" />
-    </svg>
-  );
-}
-
-export function ArrowRightIcon({ className = "", size = 20, style }: IconProps) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      style={style}
-    >
-      <path d="M5 12h14" />
-      <path d="m12 5 7 7-7 7" />
-    </svg>
-  );
-}
-
-export function HeartIcon({ className = "", size = 20, style }: IconProps) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      stroke="none"
-      className={className}
-      style={style}
-    >
-      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
     </svg>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, useSyncExternalStore } from "react";
 
 export type ThemeMode = "system" | "light" | "dark";
 
@@ -13,37 +13,36 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+function subscribeSystemTheme(callback: () => void) {
+  if (typeof window === "undefined") return () => {};
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+  mediaQuery.addEventListener("change", callback);
+  return () => mediaQuery.removeEventListener("change", callback);
+}
+
+function getSystemThemeSnapshot(): "light" | "dark" {
+  if (typeof window === "undefined") return "light";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
+function getSystemThemeServerSnapshot(): "light" | "dark" {
+  return "light";
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<ThemeMode>("system");
-  const [systemTheme, setSystemTheme] = useState<"light" | "dark">("light");
-  const [mounted, setMounted] = useState(false);
+  const [theme, setThemeState] = useState<ThemeMode>(() => {
+    if (typeof window === "undefined") return "system";
+    return (localStorage.getItem("app-theme") as ThemeMode) || "system";
+  });
 
-  // Initialize theme from localStorage and detect system preference
+  const systemTheme = useSyncExternalStore(
+    subscribeSystemTheme,
+    getSystemThemeSnapshot,
+    getSystemThemeServerSnapshot
+  );
+
   useEffect(() => {
-    const savedTheme = (localStorage.getItem("app-theme") as ThemeMode) || "system";
-    setThemeState(savedTheme);
-
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    setSystemTheme(mediaQuery.matches ? "dark" : "light");
-
-    const handleSystemChange = (e: MediaQueryListEvent) => {
-      setSystemTheme(e.matches ? "dark" : "light");
-    };
-
-    mediaQuery.addEventListener("change", handleSystemChange);
-    setMounted(true);
-
-    return () => {
-      mediaQuery.removeEventListener("change", handleSystemChange);
-    };
-  }, []);
-
-  // Update HTML data-theme attribute whenever theme or system preference changes
-  useEffect(() => {
-    if (!mounted) return;
-
     const root = document.documentElement;
-
     if (theme === "system") {
       root.setAttribute("data-theme", "system");
       localStorage.setItem("app-theme", "system");
@@ -51,7 +50,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       root.setAttribute("data-theme", theme);
       localStorage.setItem("app-theme", theme);
     }
-  }, [theme, mounted]);
+  }, [theme]);
 
   const setTheme = (newTheme: ThemeMode) => {
     setThemeState(newTheme);

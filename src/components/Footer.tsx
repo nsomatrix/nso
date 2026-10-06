@@ -1,14 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useSyncExternalStore } from "react";
 import { SparklesIcon } from "./Icons";
 
-export function Footer() {
-  const [year, setYear] = useState(2026);
+const emptySubscribe = () => () => {};
 
-  useEffect(() => {
-    setYear(new Date().getFullYear());
-  }, []);
+export function Footer() {
+  const year = useSyncExternalStore(
+    emptySubscribe,
+    () => new Date().getFullYear(),
+    () => 2026
+  );
 
   return (
     <footer className="site-footer">

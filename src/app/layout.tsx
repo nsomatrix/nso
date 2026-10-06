@@ -1,17 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Outfit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "../context/ThemeContext";
 import { ThemeScript } from "../components/ThemeScript";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const fontSans = Inter({
+  variable: "--font-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const fontDisplay = Outfit({
+  variable: "--font-display",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const fontMono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 export const viewport: Viewport = {
@@ -21,9 +29,8 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "VanillaNext — Industry Standard Next.js Web App",
+  title: "NextApp — Industry Standard Next.js Web App",
   description: "Industry standard Next.js App Router template with Vanilla CSS, auto dark/light mode detection, and responsive design for phone and desktop.",
-  keywords: ["Next.js", "App Router", "Vanilla CSS", "Auto Dark Mode", "Responsive Web App", "Phone and Desktop"],
 };
 
 export default function RootLayout({
@@ -32,7 +39,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="system" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html
+      lang="en"
+      data-theme="system"
+      className={`${fontSans.variable} ${fontDisplay.variable} ${fontMono.variable}`}
+    >
       <head>
         <ThemeScript />
       </head>
