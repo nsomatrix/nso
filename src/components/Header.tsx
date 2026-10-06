@@ -27,8 +27,8 @@ export function Header() {
           <Image
             src={getAssetUrl("/mtx.png")}
             alt="Brand Logo"
-            width={160}
-            height={48}
+            width={190}
+            height={56}
             className="brand-logo-img"
             priority
           />

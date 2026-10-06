@@ -13,8 +13,8 @@ export function Footer() {
             <Image
               src={getAssetUrl("/mtx.png")}
               alt="Brand Logo"
-              width={140}
-              height={42}
+              width={165}
+              height={50}
               className="brand-logo-img"
             />
           </div>
