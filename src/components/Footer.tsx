@@ -1,40 +1,36 @@
 "use client";
 
-import React, { useSyncExternalStore } from "react";
-import { SparklesIcon } from "./Icons";
-
-const emptySubscribe = () => () => {};
+import React from "react";
+import Image from "next/image";
 
 export function Footer() {
-  const year = useSyncExternalStore(
-    emptySubscribe,
-    () => new Date().getFullYear(),
-    () => 2026
-  );
 
   return (
     <footer className="site-footer">
       <div className="container footer-inner">
         <div className="footer-brand">
           <div className="brand-logo">
-            <div className="logo-icon-wrapper">
-              <SparklesIcon size={16} className="logo-icon" />
-            </div>
-            <span className="logo-title">NextApp</span>
+            <Image
+              src="/mtx.png"
+              alt="Brand Logo"
+              width={140}
+              height={42}
+              className="brand-logo-img"
+            />
           </div>
           <p className="footer-desc">
-            Industry standard Next.js template built with Vanilla CSS & Auto Dark/Light theme mode.
+            Seeking Eternal Glory, One World
           </p>
         </div>
 
         <div className="footer-status">
           <span className="status-indicator"></span>
-          <span>Phone & Desktop Ready</span>
+          <span>Online</span>
         </div>
       </div>
 
       <div className="container footer-bottom">
-        <p>&copy; {year} NextApp. All rights reserved.</p>
+        <p>&copy; 2019 Matrix™</p>
       </div>
     </footer>
   );

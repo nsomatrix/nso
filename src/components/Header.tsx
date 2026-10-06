@@ -2,38 +2,59 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { ThemeToggle } from "./ThemeToggle";
-import { SparklesIcon, MenuIcon, CloseIcon } from "./Icons";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { MenuIcon, CloseIcon } from "./Icons";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  const navItems = [
+    { label: "Home", href: "/" },
+    { label: "Wall", href: "/wall" },
+    { label: "Emulators", href: "/emulators" },
+    { label: "MODs", href: "/mods" },
+    { label: "NinjaDEX", href: "/ninjadex" },
+  ];
 
   return (
     <header className="site-header">
       <div className="header-inner container">
         {/* Brand Logo */}
         <Link href="/" className="brand-logo">
-          <div className="logo-icon-wrapper">
-            <SparklesIcon size={18} className="logo-icon" />
-          </div>
-          <div className="logo-text-group">
-            <span className="logo-title">NextApp</span>
-            <span className="logo-badge">App Router</span>
-          </div>
+          <Image
+            src="/mtx.png"
+            alt="Brand Logo"
+            width={160}
+            height={48}
+            className="brand-logo-img"
+            priority
+          />
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="desktop-nav">
-          <Link href="/" className="nav-link active">Home</Link>
-          <a href="#about" className="nav-link">About</a>
-          <a href="#features" className="nav-link">Features</a>
+          {navItems.map((item) => {
+            const isActive = pathname === item.href;
+            return item.href.startsWith("/") ? (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`nav-link ${isActive ? "active" : ""}`}
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <a key={item.label} href={item.href} className="nav-link">
+                {item.label}
+              </a>
+            );
+          })}
         </nav>
 
-        {/* Right Actions - Theme Switcher */}
+        {/* Right Actions */}
         <div className="header-actions">
-          <div className="desktop-theme-toggle">
-            <ThemeToggle />
-          </div>
           <button
             className="mobile-menu-trigger"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -48,19 +69,29 @@ export function Header() {
       {mobileMenuOpen && (
         <div className="mobile-drawer">
           <nav className="mobile-nav">
-            <Link href="/" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-link active">
-              Home
-            </Link>
-            <a href="#about" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-link">
-              About
-            </a>
-            <a href="#features" onClick={() => setMobileMenuOpen(false)} className="mobile-nav-link">
-              Features
-            </a>
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              return item.href.startsWith("/") ? (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`mobile-nav-link ${isActive ? "active" : ""}`}
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="mobile-nav-link"
+                >
+                  {item.label}
+                </a>
+              );
+            })}
           </nav>
-          <div className="mobile-drawer-footer">
-            <ThemeToggle />
-          </div>
         </div>
       )}
     </header>
