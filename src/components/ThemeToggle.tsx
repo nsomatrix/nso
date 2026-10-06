@@ -5,7 +5,7 @@ import { useTheme, ThemeMode } from "../context/ThemeContext";
 import { SunIcon, MoonIcon, MonitorIcon } from "./Icons";
 
 export function ThemeToggle() {
-  const { theme, setTheme, resolvedTheme, systemTheme } = useTheme();
+  const { theme, setTheme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -23,48 +23,39 @@ export function ThemeToggle() {
   const options: { id: ThemeMode; label: string; icon: React.ReactNode }[] = [
     {
       id: "system",
-      label: `Auto (${systemTheme})`,
+      label: `System Auto (${systemTheme})`,
       icon: <MonitorIcon size={16} />,
     },
     {
       id: "light",
-      label: "Light",
+      label: "Light Mode",
       icon: <SunIcon size={16} />,
     },
     {
       id: "dark",
-      label: "Dark",
+      label: "Dark Mode",
       icon: <MoonIcon size={16} />,
     },
   ];
 
   return (
-    <div className="theme-toggle-wrapper" role="radiogroup" aria-label="Theme selection">
-      <div className="theme-toggle-container">
-        {options.map((option) => {
-          const isActive = theme === option.id;
-          return (
-            <button
-              key={option.id}
-              onClick={() => setTheme(option.id)}
-              className={`theme-toggle-btn ${isActive ? "active" : ""}`}
-              role="radio"
-              aria-checked={isActive}
-              title={`Switch to ${option.label} theme`}
-            >
-              <span className="theme-btn-icon">{option.icon}</span>
-              <span className="theme-btn-text">{option.label}</span>
-            </button>
-          );
-        })}
-      </div>
-      <div className="theme-status-badge">
-        <span className="status-dot"></span>
-        <span className="status-text">
-          Active Mode: <strong>{resolvedTheme.toUpperCase()}</strong>
-          {theme === "system" && <span className="auto-tag"> (System Matched)</span>}
-        </span>
-      </div>
+    <div className="theme-toggle-container" role="radiogroup" aria-label="Theme selection">
+      {options.map((option) => {
+        const isActive = theme === option.id;
+        return (
+          <button
+            key={option.id}
+            onClick={() => setTheme(option.id)}
+            className={`theme-toggle-btn ${isActive ? "active" : ""}`}
+            role="radio"
+            aria-checked={isActive}
+            title={option.label}
+            aria-label={option.label}
+          >
+            <span className="theme-btn-icon">{option.icon}</span>
+          </button>
+        );
+      })}
     </div>
   );
 }

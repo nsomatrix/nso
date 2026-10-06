@@ -1,28 +1,29 @@
 "use client";
 
 import React from "react";
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
 import { ThemeToggle } from "../components/ThemeToggle";
-import { useTheme } from "../context/ThemeContext";
 
 export default function Home() {
-  const { resolvedTheme } = useTheme();
-
   return (
-    <main className="hello-container">
-      <div className="hello-card">
-        <h1 className="hello-title">Hello World</h1>
-        <p className="hello-subtitle">
-          Industry standard Next.js app in Vanilla CSS with automatic Dark/Light mode.
-        </p>
+    <div className="page-layout">
+      <Header />
 
-        <div className="toggle-wrapper">
-          <ThemeToggle />
-        </div>
+      <main className="main-content">
+        <div className="hello-card">
+          <h1 className="hello-title">Hello World</h1>
+          <p className="hello-subtitle">
+            An industry standard Next.js web app built with Vanilla CSS, auto dark/light mode, and fluid responsive design for phone and desktop.
+          </p>
 
-        <div className="active-info">
-          <span>Active Theme: <strong>{resolvedTheme}</strong></span>
+          <div className="toggle-wrapper">
+            <ThemeToggle />
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+
+      <Footer />
+    </div>
   );
 }

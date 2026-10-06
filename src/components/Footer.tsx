@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { SparklesIcon, HeartIcon } from "./Icons";
+import { SparklesIcon } from "./Icons";
 
 export function Footer() {
   const [year, setYear] = useState(2026);
@@ -16,40 +16,23 @@ export function Footer() {
         <div className="footer-brand">
           <div className="brand-logo">
             <div className="logo-icon-wrapper">
-              <SparklesIcon size={18} className="logo-icon" />
+              <SparklesIcon size={16} className="logo-icon" />
             </div>
-            <span className="logo-title">VanillaNext</span>
+            <span className="logo-title">NextApp</span>
           </div>
-          <p className="footer-tagline">
-            Industry Standard Next.js App Template with Vanilla CSS & Auto Dark/Light Theme.
+          <p className="footer-desc">
+            Industry standard Next.js template built with Vanilla CSS & Auto Dark/Light theme mode.
           </p>
         </div>
 
-        <div className="footer-links-group">
-          <div className="footer-col">
-            <h4 className="footer-heading">Features</h4>
-            <a href="#overview">Overview</a>
-            <a href="#responsive">Phone & Desktop</a>
-            <a href="#darkmode">Auto Theme</a>
-            <a href="#code">Source Code</a>
-          </div>
-
-          <div className="footer-col">
-            <h4 className="footer-heading">Stack</h4>
-            <span>Next.js 16 App Router</span>
-            <span>TypeScript 5</span>
-            <span>Pure Vanilla CSS</span>
-            <span>React 19</span>
-          </div>
+        <div className="footer-status">
+          <span className="status-indicator"></span>
+          <span>Phone & Desktop Ready</span>
         </div>
       </div>
 
-      <div className="footer-bottom container">
-        <p>&copy; {year} VanillaNext. Built with precision for Phone & Desktop.</p>
-        <div className="footer-status">
-          <span className="status-indicator"></span>
-          <span>System Status: Operational</span>
-        </div>
+      <div className="container footer-bottom">
+        <p>&copy; {year} NextApp. All rights reserved.</p>
       </div>
     </footer>
   );
