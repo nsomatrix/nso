@@ -18,13 +18,15 @@ export function Header() {
     { label: "NinjaDEX", href: "/ninjadex" },
   ];
 
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || (process.env.NODE_ENV === "production" ? "/nso" : "");
+
   return (
     <header className="site-header">
       <div className="header-inner container">
         {/* Brand Logo */}
         <Link href="/" className="brand-logo">
           <Image
-            src="/mtx.png"
+            src={`${basePath}/mtx.png`}
             alt="Brand Logo"
             width={160}
             height={48}

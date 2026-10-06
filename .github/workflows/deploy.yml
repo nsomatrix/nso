@@ -34,7 +34,9 @@ jobs:
         run: npm ci || npm install
 
       - name: Build static site with Next.js
-        run: npm run build
+        run: |
+          npm run build
+          touch ./out/.nojekyll
 
       - name: Upload static artifact
         uses: actions/upload-pages-artifact@v3

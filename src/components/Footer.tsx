@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 
 export function Footer() {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || (process.env.NODE_ENV === "production" ? "/nso" : "");
 
   return (
     <footer className="site-footer">
@@ -11,7 +12,7 @@ export function Footer() {
         <div className="footer-brand">
           <div className="brand-logo">
             <Image
-              src="/mtx.png"
+              src={`${basePath}/mtx.png`}
               alt="Brand Logo"
               width={140}
               height={42}
