@@ -672,6 +672,340 @@ button {
   color: #ffffff;
 }
 
+.btn-download.btn-download-icon-only {
+  min-width: unset;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+.btn-download.btn-download-icon-only:hover {
+  background: #ffffff;
+  color: #000000;
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: scale(1.05);
+}
+
+.btn-download.btn-download-icon-only.status-downloading {
+  background: var(--bg-elevated);
+  color: #60a5fa;
+  border-color: rgba(96, 165, 250, 0.4);
+  cursor: wait;
+  transform: none;
+}
+
+.btn-download.btn-download-icon-only.status-completed {
+  background: #10b981;
+  color: #ffffff;
+  border-color: #10b981;
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+}
+
+.btn-download.btn-download-icon-only.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                              MODS PAGE - STREAMLINED LIST                   */
+/* -------------------------------------------------------------------------- */
+.mod-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.mod-status-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.mod-count-badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mod-count-badge:hover {
+  border-color: var(--border-subtle);
+}
+
+.mod-count-badge.active {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.mod-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mod-pill-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--border-subtle);
+  transform: translateY(-1px);
+}
+
+.mod-pill-btn.active {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
+}
+
+.mod-pill-btn .pill-label {
+  letter-spacing: 0.04em;
+}
+
+.mod-pill-btn .pill-count {
+  font-size: 0.7rem;
+  padding: 0.08rem 0.38rem;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.12);
+  color: inherit;
+}
+
+.mod-pill-btn.active .pill-count {
+  background: rgba(0, 0, 0, 0.18);
+  color: #000000;
+}
+
+.mod-search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  max-width: 320px;
+}
+
+.mod-search-icon {
+  position: absolute;
+  left: 0.85rem;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.mod-search-input {
+  width: 100%;
+  padding: 0.55rem 2.2rem 0.55rem 2.4rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+  color: #ffffff;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mod-search-input:focus {
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
+}
+
+.mod-search-clear {
+  position: absolute;
+  right: 0.65rem;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 0.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.mod-search-clear:hover {
+  color: #ffffff;
+}
+
+.mod-list-container {
+  background: var(--bg-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.mod-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.mod-list-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.15s ease;
+}
+
+.mod-list-row:last-child {
+  border-bottom: none;
+}
+
+.mod-list-row:hover {
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.mod-row-main {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.mod-file-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.mod-file-details {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+  gap: 0.15rem;
+}
+
+.mod-file-name {
+  font-family: var(--font-mono), monospace;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: -0.01em;
+}
+
+.mod-mobile-meta {
+  display: none;
+}
+
+.mod-row-meta-desktop {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-shrink: 0;
+  margin-left: auto;
+  margin-right: 0.5rem;
+}
+
+.mod-row-meta-desktop .mod-file-size {
+  min-width: 80px;
+  text-align: right;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.825rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.mod-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.18rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  text-transform: uppercase;
+}
+
+.mod-row-action {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+.mod-empty-state,
+.mod-loading-state,
+.mod-error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 3.5rem 1.5rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.mod-loading-spinner {
+  color: #ffffff;
+}
+
+.mod-error-state p {
+  color: #f87171;
+}
+
+.mod-btn-reset {
+  padding: 0.45rem 1rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+
+.mod-btn-reset:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
 @keyframes spin-keyframes {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -910,6 +1244,76 @@ button {
     padding: 0.65rem 1rem;
     font-size: 0.85rem;
     min-height: 44px;
+  }
+
+  .btn-download.btn-download-icon-only {
+    width: 38px !important;
+    min-width: 38px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 0 !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  .mod-controls-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.85rem;
+  }
+
+  .mod-status-meta {
+    justify-content: space-between;
+  }
+
+  .mod-search-box {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .mod-list-row {
+    padding: 0.75rem 0.85rem;
+    gap: 0.75rem;
+  }
+
+  .mod-file-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+
+  .mod-file-name {
+    font-size: 0.825rem;
+    white-space: normal;
+    word-break: break-all;
+    line-height: 1.35;
+  }
+
+  .mod-row-meta-desktop {
+    display: none;
+  }
+
+  .mod-mobile-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.25rem;
+  }
+
+  .meta-sep {
+    color: var(--text-muted);
+    opacity: 0.45;
+    font-size: 0.7rem;
+  }
+
+  .mod-mobile-meta .mod-file-size {
+    font-family: var(--font-mono), monospace;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .mod-file-icon {
+    width: 32px;
+    height: 32px;
   }
 
   .custom-select-wrapper {

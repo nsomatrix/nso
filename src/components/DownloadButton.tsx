@@ -8,9 +8,10 @@ interface DownloadButtonProps {
   url: string;
   filename?: string;
   disabled?: boolean;
+  iconOnly?: boolean;
 }
 
-export function DownloadButton({ url, filename, disabled }: DownloadButtonProps) {
+export function DownloadButton({ url, filename, disabled, iconOnly = false }: DownloadButtonProps) {
   const [status, setStatus] = useState<"idle" | "downloading" | "completed">("idle");
 
   const handleClick = () => {
@@ -28,23 +29,40 @@ export function DownloadButton({ url, filename, disabled }: DownloadButtonProps)
   };
 
   if (disabled || !url) {
-    return <span className="btn-disabled">Unavailable</span>;
+    return (
+      <span
+        className={`btn-disabled ${iconOnly ? "btn-download-icon-only disabled" : ""}`}
+        title="Unavailable"
+      >
+        {iconOnly ? "—" : "Unavailable"}
+      </span>
+    );
   }
 
   const finalUrl = getAssetUrl(url);
+
+  const buttonTitle =
+    status === "completed"
+      ? "Downloaded"
+      : status === "downloading"
+      ? "Downloading"
+      : filename
+      ? `Download ${filename}`
+      : "Download";
 
   return (
     <a
       href={finalUrl}
       download={filename}
       onClick={handleClick}
-      className={`btn-download status-${status}`}
-      title={status === "completed" ? "Downloaded" : status === "downloading" ? "Downloading..." : "Download"}
+      className={`btn-download ${iconOnly ? "btn-download-icon-only" : ""} status-${status}`}
+      title={buttonTitle}
+      aria-label={buttonTitle}
     >
       {status === "idle" && (
         <>
-          <DownloadIcon size={14} />
-          <span>Download</span>
+          <DownloadIcon size={iconOnly ? 16 : 14} />
+          {!iconOnly && <span>Download</span>}
         </>
       )}
 
