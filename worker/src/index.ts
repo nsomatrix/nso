@@ -77,10 +77,27 @@ export default {
     // 2. Listing endpoint: / or /api/mods
     if (url.pathname === "/" || url.pathname === "/api/mods") {
       try {
-        const listed = await env.MODS_BUCKET.list({ limit: 1000 });
         const publicR2Base = "https://pub-455d5544be7b421b830563d6f58aa045.r2.dev";
+        const allObjects: Array<{ key: string; size: number }> = [];
 
-        const files = listed.objects
+        let truncated = true;
+        let cursor: string | undefined = undefined;
+        let pageCount = 0;
+        const maxPages = 50; // Supports up to 50,000 files safely
+
+        while (truncated && pageCount < maxPages) {
+          const listed = await env.MODS_BUCKET.list({
+            limit: 1000,
+            cursor,
+          });
+
+          allObjects.push(...listed.objects);
+          truncated = listed.truncated;
+          cursor = listed.cursor;
+          pageCount++;
+        }
+
+        const files = allObjects
           .filter(
             (obj) =>
               Boolean(obj.key) &&
