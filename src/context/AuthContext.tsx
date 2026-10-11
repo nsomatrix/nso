@@ -3,7 +3,6 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 import {
   onIdTokenChanged,
-  signInWithPopup,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut as fbSignOut,
@@ -12,7 +11,7 @@ import {
   updateProfile,
   type User,
 } from "firebase/auth";
-import { auth, googleProvider, isFirebaseConfigured } from "@/lib/firebase/client";
+import { auth, isFirebaseConfigured } from "@/lib/firebase/client";
 import { getFriendlyAuthErrorMessage } from "@/lib/firebase/auth-errors";
 
 export interface UserProfile {
@@ -30,7 +29,6 @@ export interface AuthContextType {
   loading: boolean;
   error: string | null;
   isConfigured: boolean;
-  signInWithGoogle: () => Promise<void>;
   signInWithEmail: (email: string, password: string) => Promise<void>;
   signUpWithEmail: (email: string, password: string, displayName?: string) => Promise<void>;
   sendPasswordReset: (email: string) => Promise<void>;
@@ -114,26 +112,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [syncServerSession]);
 
   const clearError = useCallback(() => setError(null), []);
-
-  const signInWithGoogle = useCallback(async () => {
-    clearError();
-    if (!isFirebaseConfigured || !auth || !googleProvider) {
-      throw new Error("Firebase Authentication is not configured in .env.local.");
-    }
-    setLoading(true);
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const token = await result.user.getIdToken();
-      await syncServerSession(token);
-    } catch (err: unknown) {
-      const authErr = err as { code?: string; message?: string };
-      const msg = getFriendlyAuthErrorMessage(authErr.code || "");
-      setError(msg);
-      throw new Error(msg);
-    } finally {
-      setLoading(false);
-    }
-  }, [clearError, syncServerSession]);
 
   const signInWithEmail = useCallback(async (email: string, password: string) => {
     clearError();
@@ -256,7 +234,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         loading,
         error,
         isConfigured: isFirebaseConfigured,
-        signInWithGoogle,
         signInWithEmail,
         signUpWithEmail,
         sendPasswordReset,

@@ -219,7 +219,7 @@ export default function ProfilePage() {
                 </span>
               )}
               <span className="profile-badge provider">
-                Provider: {user.providerId === "google.com" ? "Google" : "Email"}
+                Email Account
               </span>
             </div>
           </div>
@@ -327,9 +327,7 @@ export default function ProfilePage() {
               </div>
               <div className="info-item">
                 <span className="info-label">Sign-in Method</span>
-                <span className="info-value">
-                  {user.providerId === "google.com" ? "Google Account" : "Email & Password"}
-                </span>
+                <span className="info-value">Email & Password</span>
               </div>
               <div className="info-item">
                 <span className="info-label">Account Verification</span>
