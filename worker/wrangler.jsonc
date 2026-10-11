@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nso-mods-api",
+  "account_id": "5a7de5ebf325841ea673f225e783a4bb",
+  "main": "src/index.ts",
+  "compatibility_date": "2024-09-23",
+  "r2_buckets": [
+    {
+      "binding": "MODS_BUCKET",
+      "bucket_name": "nsomods"
+    }
+  ]
+}

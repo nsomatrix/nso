@@ -17,6 +17,10 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    env:
+      NEXT_PUBLIC_MODS_API_URL: ${{ vars.NEXT_PUBLIC_MODS_API_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4

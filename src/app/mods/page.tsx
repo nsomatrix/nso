@@ -16,6 +16,8 @@ export interface ModItem {
 export interface ArchiveFile {
   name: string;
   size?: number | string;
+  downloadUrl?: string;
+  type?: "jar" | "zip";
 }
 
 export interface ArchiveResponse {
@@ -25,6 +27,12 @@ export interface ArchiveResponse {
 const ARCHIVE_ITEM_ID = "nsomods";
 const ARCHIVE_BASE_URL = `https://archive.org/download/${ARCHIVE_ITEM_ID}/`;
 const ARCHIVE_METADATA_URL = `https://archive.org/metadata/${ARCHIVE_ITEM_ID}`;
+
+// Cloudflare Worker / R2 endpoint (defaults to your deployed worker)
+const R2_API_URL = (
+  process.env.NEXT_PUBLIC_MODS_API_URL || "https://nso-mods-api.nsomatrix.workers.dev"
+).replace(/\/$/, "");
+const MODS_SOURCE_URL = R2_API_URL ? `${R2_API_URL}/api/mods` : ARCHIVE_METADATA_URL;
 
 function formatFileSize(bytes: number): string {
   if (!bytes || bytes === 0) return "";
@@ -47,14 +55,19 @@ export default function ModsPage() {
 
     async function loadMods() {
       try {
-        const res = await fetch(ARCHIVE_METADATA_URL);
+        let res = await fetch(MODS_SOURCE_URL);
+        if (!res.ok && MODS_SOURCE_URL !== ARCHIVE_METADATA_URL) {
+          console.warn("Primary MODs source failed, trying Archive.org fallback...");
+          res = await fetch(ARCHIVE_METADATA_URL);
+        }
+
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
 
         const data: ArchiveResponse = await res.json();
         if (!data.files || data.files.length === 0) {
-          throw new Error("No files found in the archive repository.");
+          throw new Error("No files found in repository.");
         }
 
         const modFiles: ModItem[] = data.files
@@ -71,10 +84,13 @@ export default function ModsPage() {
                 ? file.size
                 : parseInt(String(file.size || "0"), 10) || 0;
 
+            const downloadUrl =
+              file.downloadUrl || `${ARCHIVE_BASE_URL}${file.name}`;
+
             return {
               name: file.name,
               size: numSize,
-              downloadUrl: `${ARCHIVE_BASE_URL}${file.name}`,
+              downloadUrl,
               type: itemType,
             };
           })
@@ -87,8 +103,8 @@ export default function ModsPage() {
         }
       } catch (err: unknown) {
         if (!ignore) {
-          console.error("Error fetching MODs from Database:", err);
-          setError("Failed to load MODs from Database. Please try again.");
+          console.error("Error fetching MODs:", err);
+          setError("Failed to load MODs. Please try again.");
           setLoading(false);
         }
       }
@@ -125,7 +141,7 @@ export default function ModsPage() {
           <div className="page-header">
             <h1 className="page-title">MODs</h1>
             <p className="page-subtitle">
-              Browse and download Ninja School Online mods dynamically fetched from Database.
+              Browse and download Ninja School Online mods.
             </p>
           </div>
 
@@ -195,7 +211,7 @@ export default function ModsPage() {
             {loading ? (
               <div className="mod-loading-state">
                 <SpinnerIcon size={28} className="mod-loading-spinner" />
-                <p>Fetching latest MODs from Database</p>
+                <p>Fetching latest MODs</p>
               </div>
             ) : error ? (
               <div className="mod-error-state">
