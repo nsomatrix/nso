@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { FirebaseConfigNotice } from "@/components/FirebaseConfigNotice";
 import { useAuth } from "@/context/AuthContext";
 import {
   Mail,
@@ -174,8 +173,6 @@ function LoginFormContent() {
           {mode === "forgot" && "Enter your email to receive recovery instructions"}
         </p>
       </div>
-
-      <FirebaseConfigNotice />
 
       {/* Mode navigation tabs */}
       {mode !== "forgot" && (

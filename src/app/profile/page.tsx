@@ -290,48 +290,52 @@ export default function ProfilePage() {
             </div>
             <div className="info-card-body">
               <div className="info-item">
-                <span className="info-label">Session Architecture</span>
-                <span className="info-value">Firebase Admin HTTP-Only Session Cookie</span>
+                <span className="info-label">Session Status</span>
+                <span className="info-value">Encrypted & Active</span>
               </div>
               <div className="info-item">
-                <span className="info-label">Cookie Protection</span>
-                <span className="info-value">SameSite=Lax, Secure, Path=/</span>
+                <span className="info-label">Session Security</span>
+                <span className="info-value">Secure HTTP-Only Cookie</span>
               </div>
               <div className="info-item">
-                <span className="info-label">Authentication Token</span>
-                <span className="info-value">Auto-refreshed via Firebase onIdTokenChanged</span>
+                <span className="info-label">Token Refresh</span>
+                <span className="info-value">Automatic</span>
               </div>
             </div>
           </div>
 
-          {/* Account Identifiers Card */}
+          {/* Account Details Card */}
           <div className="profile-info-card">
             <div className="info-card-header">
               <KeyRound size={20} className="info-icon" />
-              <h2>Account Identifiers</h2>
+              <h2>Account Details</h2>
             </div>
             <div className="info-card-body">
               <div className="info-item">
-                <span className="info-label">Firebase UID</span>
+                <span className="info-label">Account ID</span>
                 <div className="info-uid-row">
                   <code className="info-uid-code">{user.uid}</code>
                   <button
                     type="button"
                     className="info-copy-btn"
                     onClick={handleCopyUid}
-                    aria-label="Copy UID"
+                    aria-label="Copy Account ID"
                   >
                     {copiedUid ? <Check size={14} /> : <Copy size={14} />}
                   </button>
                 </div>
               </div>
               <div className="info-item">
-                <span className="info-label">Auth Provider</span>
-                <span className="info-value">{user.providerId || "password"}</span>
+                <span className="info-label">Sign-in Method</span>
+                <span className="info-value">
+                  {user.providerId === "google.com" ? "Google Account" : "Email & Password"}
+                </span>
               </div>
               <div className="info-item">
-                <span className="info-label">Account Security</span>
-                <span className="info-value">Standard Firebase Identity Platform</span>
+                <span className="info-label">Account Verification</span>
+                <span className="info-value">
+                  {user.emailVerified ? "Verified" : "Pending Verification"}
+                </span>
               </div>
             </div>
           </div>
