@@ -1,0 +1,20 @@
+// Firebase client-side configuration
+// All variables prefixed with NEXT_PUBLIC_ are exposed to the browser
+
+export const firebaseClientConfig = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "",
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "",
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "",
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "",
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "",
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "",
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "",
+};
+
+// Check whether Firebase credentials have been configured
+export const isFirebaseConfigured = Boolean(
+  firebaseClientConfig.apiKey &&
+  firebaseClientConfig.apiKey !== "your_api_key_here" &&
+  firebaseClientConfig.projectId &&
+  firebaseClientConfig.authDomain
+);

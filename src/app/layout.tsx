@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Outfit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { BHBG } from "../components/BHBG";
+import { AuthProvider } from "@/context/AuthContext";
 
 const fontSans = Inter({
   variable: "--font-sans",
@@ -45,7 +46,7 @@ export default function RootLayout({
     >
       <body>
         <BHBG />
-        {children}
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

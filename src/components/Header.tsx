@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { MenuIcon, CloseIcon } from "./Icons";
 import { getAssetUrl } from "../utils/assetPath";
+import { UserMenu } from "./UserMenu";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -56,6 +57,7 @@ export function Header() {
 
         {/* Right Actions */}
         <div className="header-actions">
+          <UserMenu />
           <button
             className="mobile-menu-trigger"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -92,6 +94,14 @@ export function Header() {
                 </a>
               );
             })}
+            <div className="mobile-nav-divider" />
+            <Link
+              href="/login"
+              onClick={() => setMobileMenuOpen(false)}
+              className="mobile-nav-link mobile-nav-auth"
+            >
+              Account / Sign In
+            </Link>
           </nav>
         </div>
       )}
