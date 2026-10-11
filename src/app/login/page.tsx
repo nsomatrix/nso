@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { useAuth } from "@/context/AuthContext";
@@ -224,24 +223,9 @@ function LoginFormContent() {
 
         {mode !== "forgot" && (
           <div className="auth-input-group">
-            <div className="auth-label-row">
-              <label htmlFor="auth-password" className="auth-label">
-                Password
-              </label>
-              {mode === "signin" && (
-                <button
-                  type="button"
-                  className="auth-forgot-link"
-                  onClick={() => {
-                    setMode("forgot");
-                    setErrorMessage(null);
-                    setSuccessMessage(null);
-                  }}
-                >
-                  Forgot password?
-                </button>
-              )}
-            </div>
+            <label htmlFor="auth-password" className="auth-label">
+              Password
+            </label>
             <div className="auth-input-wrapper">
               <Lock size={18} className="auth-input-icon" />
               <input
@@ -263,6 +247,21 @@ function LoginFormContent() {
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
             </div>
+            {mode === "signin" && (
+              <div className="auth-forgot-row">
+                <button
+                  type="button"
+                  className="auth-forgot-link"
+                  onClick={() => {
+                    setMode("forgot");
+                    setErrorMessage(null);
+                    setSuccessMessage(null);
+                  }}
+                >
+                  Forgot password?
+                </button>
+              </div>
+            )}
           </div>
         )}
 
@@ -296,7 +295,7 @@ function LoginFormContent() {
           {submitting ? (
             <>
               <Loader2 size={18} className="spin-icon" />
-              <span>Processing...</span>
+              <span>Processing</span>
             </>
           ) : (
             <>
@@ -326,20 +325,6 @@ function LoginFormContent() {
           </div>
         )}
       </form>
-
-      <div className="auth-card-footer">
-        <p>
-          By accessing Matrix, you agree to our{" "}
-          <Link href="/terms" className="auth-link-text">
-            Terms of Service
-          </Link>{" "}
-          and{" "}
-          <Link href="/privacy" className="auth-link-text">
-            Privacy Policy
-          </Link>
-          .
-        </p>
-      </div>
     </div>
   );
 }
@@ -353,7 +338,7 @@ export default function LoginPage() {
           fallback={
             <div className="auth-loading-card">
               <Loader2 size={32} className="spin-icon" />
-              <p>Loading authentication...</p>
+              <p>Loading authentication</p>
             </div>
           }
         >

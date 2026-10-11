@@ -143,7 +143,7 @@ export function UserMenu() {
             disabled={loggingOut}
           >
             <LogOut size={16} />
-            <span>{loggingOut ? "Signing out..." : "Sign Out"}</span>
+            <span>{loggingOut ? "Signing out" : "Sign Out"}</span>
           </button>
         </div>
       )}

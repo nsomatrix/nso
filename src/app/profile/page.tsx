@@ -54,7 +54,7 @@ export default function ProfilePage() {
         <main className="main-content section-container auth-page-container">
           <div className="auth-loading-card">
             <Loader2 size={36} className="spin-icon" />
-            <p>Verifying secure session...</p>
+            <p>Verifying secure session</p>
           </div>
         </main>
         <Footer />
@@ -275,7 +275,7 @@ export default function ProfilePage() {
               ) : (
                 <Send size={16} />
               )}
-              <span>{sendingVerification ? "Sending..." : "Send Verification Link"}</span>
+              <span>{sendingVerification ? "Sending" : "Send Verification Link"}</span>
             </button>
           </div>
         )}
