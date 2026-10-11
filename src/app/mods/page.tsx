@@ -13,26 +13,16 @@ export interface ModItem {
   type: "jar" | "zip";
 }
 
-export interface ArchiveFile {
-  name: string;
-  size?: number | string;
-  downloadUrl?: string;
-  type?: "jar" | "zip";
+export interface ModsApiResponse {
+  files?: ModItem[];
+  error?: string;
 }
 
-export interface ArchiveResponse {
-  files?: ArchiveFile[];
-}
-
-const ARCHIVE_ITEM_ID = "nsomods";
-const ARCHIVE_BASE_URL = `https://archive.org/download/${ARCHIVE_ITEM_ID}/`;
-const ARCHIVE_METADATA_URL = `https://archive.org/metadata/${ARCHIVE_ITEM_ID}`;
-
-// Cloudflare Worker / R2 endpoint (defaults to your deployed worker)
-const R2_API_URL = (
+// Cloudflare Worker / R2 API endpoint
+const MODS_API_URL = (
   process.env.NEXT_PUBLIC_MODS_API_URL || "https://nso-mods-api.nsomatrix.workers.dev"
 ).replace(/\/$/, "");
-const MODS_SOURCE_URL = R2_API_URL ? `${R2_API_URL}/api/mods` : ARCHIVE_METADATA_URL;
+const MODS_ENDPOINT = `${MODS_API_URL}/api/mods`;
 
 function formatFileSize(bytes: number): string {
   if (!bytes || bytes === 0) return "";
@@ -55,19 +45,18 @@ export default function ModsPage() {
 
     async function loadMods() {
       try {
-        let res = await fetch(MODS_SOURCE_URL);
-        if (!res.ok && MODS_SOURCE_URL !== ARCHIVE_METADATA_URL) {
-          console.warn("Primary MODs source failed, trying Archive.org fallback...");
-          res = await fetch(ARCHIVE_METADATA_URL);
-        }
-
+        const res = await fetch(MODS_ENDPOINT);
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
 
-        const data: ArchiveResponse = await res.json();
+        const data: ModsApiResponse = await res.json();
+        if (data.error) {
+          throw new Error(data.error);
+        }
+
         if (!data.files || data.files.length === 0) {
-          throw new Error("No files found in repository.");
+          throw new Error("No files found in R2 repository.");
         }
 
         const modFiles: ModItem[] = data.files
@@ -84,13 +73,10 @@ export default function ModsPage() {
                 ? file.size
                 : parseInt(String(file.size || "0"), 10) || 0;
 
-            const downloadUrl =
-              file.downloadUrl || `${ARCHIVE_BASE_URL}${file.name}`;
-
             return {
               name: file.name,
               size: numSize,
-              downloadUrl,
+              downloadUrl: file.downloadUrl,
               type: itemType,
             };
           })
@@ -103,7 +89,7 @@ export default function ModsPage() {
         }
       } catch (err: unknown) {
         if (!ignore) {
-          console.error("Error fetching MODs:", err);
+          console.error("Error fetching MODs from Cloudflare R2:", err);
           setError("Failed to load MODs. Please try again.");
           setLoading(false);
         }
