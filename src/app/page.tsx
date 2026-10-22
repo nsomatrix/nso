@@ -8,7 +8,7 @@ export default function Home() {
   const upcomingFeatures = [
     "Networking and Client APIs",
     "NinjaDEX",
-    "Storage and Auth",
+    "Cloud Storage & R2 Sync",
     "Connect",
   ];
 
