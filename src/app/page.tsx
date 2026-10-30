@@ -3,33 +3,19 @@
 import React from "react";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
+import { HomeHero } from "../components/home/HomeHero";
+import { HomeStats } from "../components/home/HomeStats";
+import { HomePortalGrid } from "../components/home/HomePortalGrid";
 
 export default function Home() {
-  const upcomingFeatures = [
-    "Networking and Client APIs",
-    "NinjaDEX",
-    "Cloud Storage & R2 Sync",
-    "Connect",
-  ];
-
   return (
     <div className="page-layout">
       <Header />
 
-      <main className="main-content section-container">
-        <div className="hello-card">
-          <h1 className="hello-title">Matrix</h1>
-          <div className="coming-soon-badge">Coming Soon</div>
-
-          <div className="upcoming-features-list">
-            {upcomingFeatures.map((feature) => (
-              <div key={feature} className="upcoming-feature-item">
-                <span className="feature-dot"></span>
-                <span>{feature}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+      <main className="main-content section-container home-main-content">
+        <HomeHero />
+        <HomeStats />
+        <HomePortalGrid />
       </main>
 
       <Footer />
