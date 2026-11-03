@@ -11,8 +11,8 @@ export function AnimatedLogoCard() {
         <Image
           src={getAssetUrl("/mtx.png")}
           alt="Matrix"
-          width={240}
-          height={80}
+          width={320}
+          height={110}
           priority
           draggable={false}
           onContextMenu={(e) => e.preventDefault()}

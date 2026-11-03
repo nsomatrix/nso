@@ -39,6 +39,26 @@ export default function ModsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState<"all" | "jar" | "zip">("all");
   const [fetchTrigger, setFetchTrigger] = useState(0);
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
+
+  useEffect(() => {
+    // Show disclaimer once on entry
+    try {
+      const dismissed = sessionStorage.getItem("matrix_mods_disclaimer_seen");
+      if (!dismissed) {
+        setShowDisclaimer(true);
+      }
+    } catch {
+      setShowDisclaimer(true);
+    }
+  }, []);
+
+  const handleDismissDisclaimer = () => {
+    setShowDisclaimer(false);
+    try {
+      sessionStorage.setItem("matrix_mods_disclaimer_seen", "1");
+    } catch {}
+  };
 
   useEffect(() => {
     let ignore = false;
@@ -122,8 +142,52 @@ export default function ModsPage() {
     <div className="page-layout">
       <Header />
 
-      <main className="main-content section-container">
-        <div className="page-glass-wall">
+      <main className="main-content section-container mods-page-container">
+        {/* Modal Dialog */}
+        {showDisclaimer && (
+          <div className="mods-dialog-backdrop" onClick={handleDismissDisclaimer}>
+            <div
+              className="mods-dialog-card"
+              onClick={(e) => e.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="mods-dialog-title"
+            >
+              <div className="mods-dialog-header">
+                <span className="mods-dialog-tag">DISCLAIMER</span>
+                <button
+                  type="button"
+                  onClick={handleDismissDisclaimer}
+                  className="mods-dialog-close"
+                  aria-label="Close"
+                >
+                  <CloseIcon size={14} />
+                </button>
+              </div>
+
+              <div className="mods-dialog-content">
+                <h3 id="mods-dialog-title" className="mods-dialog-title">
+                  Community Uploaded MODs
+                </h3>
+                <p className="mods-dialog-text">
+                  MODs here are user uploaded, use it at your own discretion.
+                </p>
+              </div>
+
+              <div className="mods-dialog-actions">
+                <button
+                  type="button"
+                  onClick={handleDismissDisclaimer}
+                  className="mods-dialog-confirm"
+                >
+                  I Understand
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div className="mods-content-free">
           <div className="page-header">
             <h1 className="page-title">MODs</h1>
             <p className="page-subtitle">
@@ -192,7 +256,7 @@ export default function ModsPage() {
             </div>
           </div>
 
-          {/* MODs List */}
+          {/* Free, Open MODs List */}
           <div className="mod-list-container">
             {loading ? (
               <div className="mod-loading-state">
@@ -235,7 +299,7 @@ export default function ModsPage() {
                       </div>
                     </div>
 
-                    {/* Desktop metadata column: format badge & file size neatly aligned on the right before download */}
+                    {/* Desktop metadata column */}
                     <div className="mod-row-meta-desktop">
                       <span className={`mod-badge ${mod.type}`}>
                         {mod.type.toUpperCase()}
