@@ -41,9 +41,69 @@ export interface ClanStatusProps {
 export function ClanStatus({ avatarSrc, avatars = CLAN_AVATARS }: ClanStatusProps) {
   // 1. Chrono Uptime State
   const [uptime, setUptime] = useState<UptimeData | null>(null);
+  const [displayedValues, setDisplayedValues] = useState<{
+    years: number;
+    months: number;
+    days: number;
+    hours: number;
+    minutes: number;
+    seconds: number;
+  } | null>(null);
+  const [sublabelAnimated, setSublabelAnimated] = useState(false);
+  const [displayedDate, setDisplayedDate] = useState("Since Feb 01, 2019");
+  const hasAnimatedRef = React.useRef(false);
 
   useEffect(() => {
-    setUptime(calculateUptime());
+    const initial = calculateUptime();
+    setUptime(initial);
+
+    // Initial mount odometer / scramble slot-machine effect
+    if (!hasAnimatedRef.current) {
+      hasAnimatedRef.current = true;
+      const duration = 1200; // ms
+      const startTime = performance.now();
+      const targetDate = "Since Feb 01, 2019";
+      const scrambleChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+      const animateRoll = (now: number) => {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Quartic ease-out: 1 - (1 - t)^4
+        const ease = 1 - Math.pow(1 - progress, 4);
+
+        if (progress < 1) {
+          setDisplayedValues({
+            years: Math.round(initial.years * ease),
+            months: Math.round(initial.months * ease),
+            days: Math.round(initial.days * ease),
+            hours: Math.round(initial.hours * ease),
+            minutes: Math.round(initial.minutes * ease),
+            seconds: Math.round(initial.seconds * ease),
+          });
+
+          // Hacker / cyberpunk cipher decrypt scramble into "Since Feb 01, 2019"
+          const resolvedChars = Math.floor(targetDate.length * ease);
+          let scrambled = targetDate.slice(0, resolvedChars);
+          for (let i = resolvedChars; i < targetDate.length; i++) {
+            if (targetDate[i] === " " || targetDate[i] === ",") {
+              scrambled += targetDate[i];
+            } else {
+              scrambled += scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+            }
+          }
+          setDisplayedDate(scrambled);
+
+          requestAnimationFrame(animateRoll);
+        } else {
+          setDisplayedValues(null); // Return directly to live reactive ticks
+          setDisplayedDate(targetDate);
+          setSublabelAnimated(true);
+        }
+      };
+
+      requestAnimationFrame(animateRoll);
+    }
+
     const interval = setInterval(() => {
       setUptime(calculateUptime());
     }, 1000);
@@ -179,14 +239,16 @@ export function ClanStatus({ avatarSrc, avatars = CLAN_AVATARS }: ClanStatusProp
     setCurrentIndex((prev) => (prev + 1) % dialogues.length);
   };
 
-  const units = uptime
+  const activeVals = displayedValues || uptime;
+
+  const units = activeVals
     ? [
-        { val: uptime.years, label: "YRS" },
-        { val: uptime.months, label: "MOS" },
-        { val: uptime.days, label: "DAYS" },
-        { val: String(uptime.hours).padStart(2, "0"), label: "HRS" },
-        { val: String(uptime.minutes).padStart(2, "0"), label: "MIN" },
-        { val: String(uptime.seconds).padStart(2, "0"), label: "SEC" },
+        { val: activeVals.years, label: "YRS" },
+        { val: activeVals.months, label: "MOS" },
+        { val: activeVals.days, label: "DAYS" },
+        { val: String(activeVals.hours).padStart(2, "0"), label: "HRS" },
+        { val: String(activeVals.minutes).padStart(2, "0"), label: "MIN" },
+        { val: String(activeVals.seconds).padStart(2, "0"), label: "SEC" },
       ]
     : [];
 
@@ -195,7 +257,9 @@ export function ClanStatus({ avatarSrc, avatars = CLAN_AVATARS }: ClanStatusProp
       {/* ── UPTIME MODULE ── */}
       <div className="clan-uptime-block">
         <div className="clan-uptime-header">
-          <span className="clan-uptime-sub">Since Feb 01, 2019</span>
+          <span className={`clan-uptime-sub ${sublabelAnimated ? "animated-in" : ""}`}>
+            {displayedDate}
+          </span>
         </div>
 
         <div className="clan-uptime-grid">
@@ -207,7 +271,7 @@ export function ClanStatus({ avatarSrc, avatars = CLAN_AVATARS }: ClanStatusProp
               </div>
             ))
           ) : (
-            <div className="clan-uptime-loading">Loading uptime...</div>
+            <div className="clan-uptime-loading">Loading Uptime</div>
           )}
         </div>
       </div>
