@@ -1525,6 +1525,57 @@ button {
   width: 100%;
   max-width: 760px;
   margin: 0 auto 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                         ANIMATED LOGO HERO (FRAMELESS)                     */
+/* -------------------------------------------------------------------------- */
+
+.home-logo-container {
+  width: 100%;
+  max-width: 740px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0 0.5rem;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.home-logo-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  animation: logo-float 4.5s ease-in-out infinite;
+}
+
+.home-logo-graphic {
+  width: auto;
+  height: clamp(52px, 8vw, 76px);
+  object-fit: contain;
+  filter: drop-shadow(0 0 16px rgba(239, 68, 68, 0.45));
+  transition: transform 0.3s ease, filter 0.3s ease;
+  user-select: none;
+}
+
+.home-logo-wrap:hover .home-logo-graphic {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 24px rgba(239, 68, 68, 0.75));
+}
+
+@keyframes logo-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1548,46 +1599,26 @@ button {
   transition: all 0.2s ease;
 }
 
-/* 1. Header */
-.clan-status-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.clan-status-title {
-  font-family: var(--font-mono), monospace;
-  font-size: 1rem;
-  font-weight: 700;
-  color: #f1f5f9;
-  letter-spacing: -0.01em;
-  margin: 0;
-}
-
-/* 2. Uptime Module */
+/* 1. Uptime Module */
 .clan-uptime-block {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.65rem;
 }
 
-.clan-uptime-meta {
+.clan-uptime-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  font-family: var(--font-mono), monospace;
-}
-
-.clan-uptime-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #94a3b8;
-  letter-spacing: 0.02em;
+  justify-content: flex-end;
+  width: 100%;
 }
 
 .clan-uptime-sub {
+  font-family: var(--font-mono), monospace;
   font-size: 0.7rem;
   color: #64748b;
+  letter-spacing: 0.04em;
 }
 
 .clan-uptime-grid {
@@ -1640,13 +1671,98 @@ button {
   padding: 0.75rem;
 }
 
-/* 3. Dispatch Row */
-.clan-dispatch-row {
+/* 3. Live Dispatch Module */
+.clan-dispatch-card {
   display: flex;
-  align-items: center;
-  gap: 1.25rem;
+  flex-direction: column;
+  gap: 0.85rem;
   padding-top: 1.25rem;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.clan-dispatch-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 28px;
+}
+
+.clan-category-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  height: 26px;
+  box-sizing: border-box;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 0 0.65rem;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+}
+
+.clan-chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.clan-stepper {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.clan-stepper-counter {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: 0.05em;
+  padding: 0 0.35rem;
+  min-width: 52px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+
+.clan-nav-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  border-radius: 4px;
+  width: 22px;
+  height: 22px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.clan-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.clan-dispatch-body {
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+  min-height: 72px;
 }
 
 .clan-avatar-box {
@@ -1695,87 +1811,18 @@ button {
   image-rendering: crisp-edges;
 }
 
-.clan-dialogue-content {
+.clan-speech-bubble {
   flex: 1;
   min-width: 0;
   display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.clan-dialogue-meta {
-  display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-}
-
-.clan-category-chip {
-  font-family: var(--font-mono), monospace;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: #94a3b8;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 4px;
-  padding: 0.15rem 0.5rem;
-  transition: all 0.25s ease;
-}
-
-.clan-stepper {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.clan-nav-btn {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #cbd5e1;
-  border-radius: 4px;
-  width: 20px;
-  height: 20px;
-  font-size: 0.75rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  transition: all 0.15s ease;
-}
-
-.clan-nav-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-}
-
-.clan-dots {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.clan-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255, 255, 255, 0.2);
-  cursor: pointer;
-  padding: 0;
-  transition: all 0.2s ease;
-}
-
-.clan-dot.active {
-  background: #ffffff;
-  transform: scale(1.25);
 }
 
 .clan-speech-text {
   font-family: var(--font-mono), monospace;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   font-weight: 500;
-  line-height: 1.5;
+  line-height: 1.6;
   margin: 0;
   white-space: pre-wrap;
   word-break: break-word;
@@ -2662,10 +2709,31 @@ button {
     font-size: 1.25rem;
   }
 
-  .clan-dispatch-row {
-    align-items: flex-start;
-    gap: 0.85rem;
+  .clan-dispatch-card {
+    gap: 0.75rem;
     padding-top: 1rem;
+  }
+
+  .clan-dispatch-header {
+    gap: 0.5rem;
+  }
+
+  .clan-category-chip {
+    font-size: 0.65rem;
+    height: 24px;
+    padding: 0 0.5rem;
+  }
+
+  .clan-stepper-counter {
+    font-size: 0.65rem;
+    min-width: 44px;
+    padding: 0 0.2rem;
+  }
+
+  .clan-dispatch-body {
+    align-items: center;
+    gap: 0.85rem;
+    min-height: 60px;
   }
 
   .clan-avatar-box {
@@ -2675,14 +2743,8 @@ button {
 
   .clan-speech-text {
     font-size: 0.85rem;
+    line-height: 1.45;
   }
 }
 
-@media (max-width: 420px) {
-  .clan-uptime-meta {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.25rem;
-  }
-}
 

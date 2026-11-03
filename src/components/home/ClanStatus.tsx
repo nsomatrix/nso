@@ -192,15 +192,9 @@ export function ClanStatus({ avatarSrc, avatars = CLAN_AVATARS }: ClanStatusProp
 
   return (
     <div className="clan-status-wrapper">
-      {/* ── TOP HEADER ── */}
-      <div className="clan-status-head">
-        <h2 className="clan-status-title">Clan Status</h2>
-      </div>
-
       {/* ── UPTIME MODULE ── */}
       <div className="clan-uptime-block">
-        <div className="clan-uptime-meta">
-          <span className="clan-uptime-label">Platform Uptime</span>
+        <div className="clan-uptime-header">
           <span className="clan-uptime-sub">Since Feb 01, 2019</span>
         </div>
 
@@ -218,83 +212,79 @@ export function ClanStatus({ avatarSrc, avatars = CLAN_AVATARS }: ClanStatusProp
         </div>
       </div>
 
-      {/* ── LIVE DISPATCH ROW ── */}
-      <div className="clan-dispatch-row">
-        <div
-          className={`clan-avatar-box ${avatars.length > 1 ? "interactive" : ""} ${isVibrating ? "avatar-tap-vibrate" : ""}`}
-          onClick={handleAvatarClick}
-        >
-          <Image
-            src={getAssetUrl(currentAvatar)}
-            alt="Shinobi"
-            width={72}
-            height={72}
-            unoptimized
-            className="clan-pixel-sprite"
-          />
-        </div>
-
-        <div className="clan-dialogue-content">
-          <div className="clan-dialogue-meta">
+      {/* ── LIVE DISPATCH MODULE ── */}
+      <div className="clan-dispatch-card">
+        <div className="clan-dispatch-header">
+          <div
+            className="clan-category-chip"
+            style={{
+              borderColor:
+                activeDialogue.color !== "#ffffff"
+                  ? `${activeDialogue.color}66`
+                  : undefined,
+              color:
+                activeDialogue.color !== "#ffffff"
+                  ? activeDialogue.color
+                  : undefined,
+            }}
+          >
             <span
-              className="clan-category-chip"
+              className="clan-chip-dot"
               style={{
-                borderColor:
-                  activeDialogue.color !== "#ffffff"
-                    ? `${activeDialogue.color}66`
-                    : undefined,
-                color:
+                background:
                   activeDialogue.color !== "#ffffff"
                     ? activeDialogue.color
-                    : undefined,
+                    : "#ef4444",
               }}
-            >
-              {categoryTag}
-            </span>
-
-            <div className="clan-stepper">
-              <button
-                type="button"
-                className="clan-nav-btn"
-                onClick={handlePrev}
-                aria-label="Previous Dispatch"
-              >
-                ‹
-              </button>
-              <div className="clan-dots">
-                {dialogues.map((d, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    className={`clan-dot ${idx === currentIndex ? "active" : ""}`}
-                    onClick={() => setCurrentIndex(idx)}
-                    style={
-                      idx === currentIndex && d.color !== "#ffffff"
-                        ? { background: d.color }
-                        : undefined
-                    }
-                    aria-label={`Jump to dispatch ${idx + 1}`}
-                  />
-                ))}
-              </div>
-              <button
-                type="button"
-                className="clan-nav-btn"
-                onClick={handleNext}
-                aria-label="Next Dispatch"
-              >
-                ›
-              </button>
-            </div>
+            />
+            {categoryTag}
           </div>
 
-          <p
-            className="clan-speech-text"
-            style={{ color: activeDialogue.color }}
+          <div className="clan-stepper">
+            <button
+              type="button"
+              className="clan-nav-btn"
+              onClick={handlePrev}
+              aria-label="Previous Dispatch"
+            >
+              ‹
+            </button>
+            <button
+              type="button"
+              className="clan-nav-btn"
+              onClick={handleNext}
+              aria-label="Next Dispatch"
+            >
+              ›
+            </button>
+          </div>
+        </div>
+
+        <div className="clan-dispatch-body">
+          <div
+            className={`clan-avatar-box ${avatars.length > 1 ? "interactive" : ""} ${isVibrating ? "avatar-tap-vibrate" : ""}`}
+            onClick={handleAvatarClick}
+            title="Tap to change avatar"
           >
-            {typedText}
-            <span className="clan-caret">_</span>
-          </p>
+            <Image
+              src={getAssetUrl(currentAvatar)}
+              alt="Shinobi"
+              width={72}
+              height={72}
+              unoptimized
+              className="clan-pixel-sprite"
+            />
+          </div>
+
+          <div className="clan-speech-bubble">
+            <p
+              className="clan-speech-text"
+              style={{ color: activeDialogue.color }}
+            >
+              {typedText}
+              <span className="clan-caret">_</span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
