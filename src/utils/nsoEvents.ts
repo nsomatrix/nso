@@ -8,6 +8,7 @@ export interface DialogueItem {
   text: string;
   color: "#51cf66" | "#ffd43b" | "#ff6b6b" | "#ffffff";
   category?: string;
+  avatar?: string;
 }
 
 export interface UptimeData {

@@ -1,7 +1,23 @@
 /* -------------------------------------------------------------------------- */
+/*                         MINECRAFT RETRO PIXEL FONT                         */
+/* -------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Minecraft';
+  src: url('/fonts/Minecraft.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* -------------------------------------------------------------------------- */
 /*                        PERMANENT DARK SPACE THEME TOKENS                   */
 /* -------------------------------------------------------------------------- */
 :root {
+  --font-minecraft: 'Minecraft', monospace;
+  --font-sans: var(--font-minecraft), 'Minecraft', monospace;
+  --font-mono: var(--font-minecraft), 'Minecraft', monospace;
+  --font-display: var(--font-minecraft), 'Minecraft', monospace;
+
   --bg-primary: #000002;
   --bg-surface: rgba(14, 14, 20, 0.72);
   --bg-elevated: rgba(26, 26, 36, 0.82);
@@ -43,7 +59,7 @@ html, body {
 body, button, input, select, textarea {
   background-color: transparent;
   color: var(--text-primary);
-  font-family: var(--font-mono), SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+  font-family: var(--font-minecraft), 'Minecraft', monospace;
   transition: color 0.2s ease;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -1635,11 +1651,39 @@ button {
 
 .clan-avatar-box {
   flex-shrink: 0;
-  width: 48px;
-  height: 48px;
+  width: 72px;
+  height: 72px;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  transition: transform 0.15s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.clan-avatar-box.interactive {
+  cursor: pointer;
+}
+
+.clan-avatar-box.interactive:hover {
+  transform: scale(1.06);
+}
+
+.clan-avatar-box.interactive:active {
+  transform: scale(0.92);
+}
+
+.avatar-tap-vibrate {
+  animation: avatar-micro-shake 0.18s ease-in-out;
+}
+
+@keyframes avatar-micro-shake {
+  0% { transform: scale(0.95) rotate(0deg); }
+  25% { transform: scale(1.05) rotate(-3deg); }
+  50% { transform: scale(0.98) rotate(3deg); }
+  75% { transform: scale(1.02) rotate(-1deg); }
+  100% { transform: scale(1) rotate(0deg); }
 }
 
 .clan-pixel-sprite {
@@ -1647,6 +1691,8 @@ button {
   height: 100%;
   object-fit: contain;
   image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
 }
 
 .clan-dialogue-content {
@@ -2623,8 +2669,8 @@ button {
   }
 
   .clan-avatar-box {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
   }
 
   .clan-speech-text {

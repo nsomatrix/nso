@@ -1,22 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Outfit, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const fontSans = Inter({
-  variable: "--font-sans",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const fontDisplay = Outfit({
-  variable: "--font-display",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const fontMono = JetBrains_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
+const minecraftFont = localFont({
+  src: "../fonts/Minecraft.ttf",
+  variable: "--font-minecraft",
   display: "swap",
 });
 
@@ -40,9 +28,9 @@ export default function RootLayout({
     <html
       lang="en"
       data-theme="dark"
-      className={`${fontSans.variable} ${fontDisplay.variable} ${fontMono.variable}`}
+      className={minecraftFont.variable}
     >
-      <body>
+      <body className={minecraftFont.className}>
         {children}
       </body>
     </html>

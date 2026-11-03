@@ -10,7 +10,35 @@ import {
   UptimeData,
 } from "../../utils/nsoEvents";
 
-export function ClanStatus() {
+// Registered Clan Avatars — all imported GIFs from downloads
+export const CLAN_AVATARS: string[] = [
+  "/Pictures/char.gif",
+  "/Pictures/gifs/0377340532.gif",
+  "/Pictures/gifs/1ninjalv39.gif",
+  "/Pictures/gifs/2pup19.gif",
+  "/Pictures/gifs/4xtamhuyet.gif",
+  "/Pictures/gifs/anhthosuaongnuoc.gif",
+  "/Pictures/gifs/Ghhgjytd.gif",
+  "/Pictures/gifs/HeartNSO.gif",
+  "/Pictures/gifs/Hochutich365.gif",
+  "/Pictures/gifs/HUYSlUNHAN.gif",
+  "/Pictures/gifs/i3boyngheo9x.gif",
+  "/Pictures/gifs/Mrthayma.gif",
+  "/Pictures/gifs/quydeptrai647.gif",
+  "/Pictures/gifs/skigaidinhdn12.gif",
+  "/Pictures/gifs/Thanhkennyboy.gif",
+  "/Pictures/gifs/Upgame2020.gif",
+  "/Pictures/gifs/V1pkecmah.gif",
+  "/Pictures/gifs/vuafre222.gif",
+  "/Pictures/gifs/zzahaiprozz.gif",
+];
+
+export interface ClanStatusProps {
+  avatarSrc?: string;
+  avatars?: string[];
+}
+
+export function ClanStatus({ avatarSrc, avatars = CLAN_AVATARS }: ClanStatusProps) {
   // 1. Chrono Uptime State
   const [uptime, setUptime] = useState<UptimeData | null>(null);
 
@@ -27,6 +55,17 @@ export function ClanStatus() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [typedText, setTypedText] = useState("");
   const [isTyping, setIsTyping] = useState(true);
+
+  // 3. Avatar Cycling State (deterministic initial value to prevent SSR hydration mismatch)
+  const [avatarIndex, setAvatarIndex] = useState(0);
+  const [isVibrating, setIsVibrating] = useState(false);
+
+  useEffect(() => {
+    // Randomize initial avatar on client mount only
+    if (avatars.length > 1) {
+      setAvatarIndex(Math.floor(Math.random() * avatars.length));
+    }
+  }, [avatars.length]);
 
   useEffect(() => {
     setDialogues(generateDialogues());
@@ -45,6 +84,38 @@ export function ClanStatus() {
       }
     );
   }, [dialogues, currentIndex]);
+
+  // Active avatar resolution: prop override > dialogue specific avatar > cycle list
+  const currentAvatar = useMemo(() => {
+    if (avatarSrc) return avatarSrc;
+    if (activeDialogue.avatar) return activeDialogue.avatar;
+    if (avatars.length > 0) return avatars[avatarIndex % avatars.length];
+    return "/Pictures/char.gif";
+  }, [avatarSrc, activeDialogue.avatar, avatars, avatarIndex]);
+
+  const handleAvatarClick = () => {
+    // 1. Device Haptic Vibration (Phone haptics)
+    if (
+      typeof window !== "undefined" &&
+      typeof navigator !== "undefined" &&
+      "vibrate" in navigator
+    ) {
+      try {
+        navigator.vibrate(35);
+      } catch {
+        // Fallback safely if browser blocks vibration
+      }
+    }
+
+    // 2. Visual micro-vibration bounce feedback
+    setIsVibrating(true);
+    setTimeout(() => setIsVibrating(false), 200);
+
+    // 3. Cycle to next avatar
+    if (avatars.length > 1) {
+      setAvatarIndex((prev) => (prev + 1) % avatars.length);
+    }
+  };
 
   const categoryTag = useMemo(() => {
     const id = activeDialogue.id;
@@ -149,12 +220,15 @@ export function ClanStatus() {
 
       {/* ── LIVE DISPATCH ROW ── */}
       <div className="clan-dispatch-row">
-        <div className="clan-avatar-box">
+        <div
+          className={`clan-avatar-box ${avatars.length > 1 ? "interactive" : ""} ${isVibrating ? "avatar-tap-vibrate" : ""}`}
+          onClick={handleAvatarClick}
+        >
           <Image
-            src={getAssetUrl("/Pictures/char.gif")}
+            src={getAssetUrl(currentAvatar)}
             alt="Shinobi"
-            width={48}
-            height={48}
+            width={72}
+            height={72}
             unoptimized
             className="clan-pixel-sprite"
           />
@@ -226,4 +300,3 @@ export function ClanStatus() {
     </div>
   );
 }
-
