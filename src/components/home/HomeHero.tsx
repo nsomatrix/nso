@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getAssetUrl } from "../../utils/assetPath";
 import { SparklesIcon, DownloadIcon } from "../Icons";
-import { ShinobiTelemetryDeck } from "./ShinobiTelemetryDeck";
+import { ClanStatus } from "./ClanStatus";
 
 export function HomeHero() {
   return (
@@ -31,9 +31,9 @@ export function HomeHero() {
         Ninja grid streamlined • The definitive Ninja School Online ecosystem
       </p>
 
-      {/* 3. Integrated Shinobi Chrono & Telemetry HUD */}
+      {/* 3. Integrated Clan Status */}
       <div className="hero-block-wrapper">
-        <ShinobiTelemetryDeck />
+        <ClanStatus />
       </div>
 
       {/* 5. Quick Launch Actions */}

@@ -1511,72 +1511,80 @@ button {
   margin: 0 auto 1.75rem;
 }
 
-.shinobi-deck-card {
+/* -------------------------------------------------------------------------- */
+/*                               CLAN STATUS                                  */
+/* -------------------------------------------------------------------------- */
+
+.clan-status-wrapper {
   width: 100%;
-  background: rgba(14, 15, 22, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 740px;
+  margin: 0 auto;
+  background: rgba(14, 15, 22, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-lg);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
-  position: relative;
-  overflow: hidden;
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
   text-align: left;
+  transition: all 0.2s ease;
 }
 
 /* 1. Header */
-.deck-header {
+.clan-status-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 1.25rem 0.75rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.deck-terminal-id {
+.clan-status-title {
   font-family: var(--font-mono), monospace;
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #f1f5f9;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+/* 2. Uptime Module */
+.clan-uptime-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.clan-uptime-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono), monospace;
+}
+
+.clan-uptime-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #94a3b8;
   letter-spacing: 0.02em;
 }
 
-/* 2. Chrono Section */
-.deck-chrono-section {
-  padding: 1rem 1.25rem 0.85rem;
-}
-
-.chrono-section-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0.65rem;
-}
-
-.chrono-label {
-  font-family: var(--font-mono), monospace;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #cbd5e1;
-}
-
-.chrono-sub-tag {
-  font-family: var(--font-mono), monospace;
+.clan-uptime-sub {
   font-size: 0.7rem;
   color: #64748b;
 }
 
-.chrono-grid {
+.clan-uptime-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 0.5rem;
 }
 
-.chrono-cell {
+.clan-uptime-cell {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 8px;
-  padding: 0.65rem 0.35rem;
+  padding: 0.75rem 0.25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1584,12 +1592,12 @@ button {
   transition: all 0.2s ease;
 }
 
-.chrono-cell.cell-live {
+.clan-uptime-cell:hover {
   background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
-.chrono-cell-num {
+.clan-uptime-val {
   font-family: var(--font-mono), monospace;
   font-size: clamp(1.15rem, 2.5vw, 1.45rem);
   font-weight: 700;
@@ -1598,138 +1606,112 @@ button {
   font-variant-numeric: tabular-nums;
 }
 
-.cell-live .chrono-cell-num {
-  color: #ffffff;
-}
-
-.chrono-cell-unit {
+.clan-uptime-unit {
   font-family: var(--font-mono), monospace;
   font-size: 0.65rem;
   font-weight: 600;
   color: #94a3b8;
-  margin-top: 0.2rem;
+  letter-spacing: 0.05em;
+  margin-top: 0.25rem;
 }
 
-.chrono-loading {
+.clan-uptime-loading {
   grid-column: 1 / -1;
   font-family: var(--font-mono), monospace;
   font-size: 0.8rem;
   color: #64748b;
   text-align: center;
-  padding: 0.8rem;
+  padding: 0.75rem;
 }
 
-/* 3. Seam Divider */
-.deck-seam-divider {
-  height: 1px;
-  background: rgba(255, 255, 255, 0.06);
-  margin: 0.25rem 1.25rem;
-}
-
-/* 4. Dialogue Section */
-.deck-dialogue-section {
+/* 3. Dispatch Row */
+.clan-dispatch-row {
   display: flex;
-  align-items: stretch;
-  gap: 1.1rem;
-  padding: 0.85rem 1.25rem 1.1rem;
-}
-
-.deck-avatar-box {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.clan-avatar-box {
   flex-shrink: 0;
-}
-
-.avatar-pixel-frame {
-  position: relative;
-  width: 64px;
-  height: 64px;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  padding: 4px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.deck-pixel-sprite {
+.clan-pixel-sprite {
   width: 100%;
   height: 100%;
   object-fit: contain;
   image-rendering: pixelated;
 }
 
-.deck-speech-box {
+.clan-dialogue-content {
   flex: 1;
   min-width: 0;
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 8px;
-  padding: 0.85rem 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 0.4rem;
 }
 
-.speech-meta-bar {
+.clan-dialogue-meta {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  margin-bottom: 0.5rem;
-  flex-wrap: wrap;
 }
 
-.speech-category-chip {
+.clan-category-chip {
   font-family: var(--font-mono), monospace;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 600;
   color: #94a3b8;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 4px;
   padding: 0.15rem 0.5rem;
+  transition: all 0.25s ease;
 }
 
-.deck-controls {
+.clan-stepper {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.4rem;
 }
 
-.deck-nav-btn {
+.clan-nav-btn {
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   color: #cbd5e1;
   border-radius: 4px;
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
+  font-size: 0.75rem;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.85rem;
-  cursor: pointer;
   line-height: 1;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
-.deck-nav-btn:hover {
+.clan-nav-btn:hover {
   background: rgba(255, 255, 255, 0.1);
   color: #ffffff;
 }
 
-.deck-dots {
+.clan-dots {
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.deck-dot {
-  width: 6px;
-  height: 6px;
+.clan-dot {
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   border: none;
   background: rgba(255, 255, 255, 0.2);
@@ -1738,29 +1720,23 @@ button {
   transition: all 0.2s ease;
 }
 
-.deck-dot.active {
+.clan-dot.active {
   background: #ffffff;
-  transform: scale(1.2);
+  transform: scale(1.25);
 }
 
-.speech-content-box {
-  min-height: 48px;
-  display: flex;
-  align-items: center;
-}
-
-.speech-text {
+.clan-speech-text {
   font-family: var(--font-mono), monospace;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 500;
-  color: #e2e8f0;
   line-height: 1.5;
   margin: 0;
   white-space: pre-wrap;
   word-break: break-word;
+  transition: color 0.3s ease;
 }
 
-.speech-blinking-caret {
+.clan-caret {
   color: #94a3b8;
   font-weight: 700;
   margin-left: 2px;
@@ -2621,32 +2597,46 @@ button {
   }
 }
 
-@media (max-width: 540px) {
-  .chrono-section-bar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.25rem;
+@media (max-width: 640px) {
+  .clan-status-wrapper {
+    padding: 1.25rem 1rem;
+    gap: 1.25rem;
   }
 
-  .chrono-grid {
+  .clan-uptime-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.35rem;
-  }
-
-  .chrono-cell {
-    padding: 0.5rem 0.25rem;
-  }
-
-  .chrono-cell-num {
-    font-size: 1.15rem;
-  }
-
-  .deck-footer {
     gap: 0.4rem;
   }
 
-  .deck-status-item {
-    font-size: 0.6rem;
+  .clan-uptime-cell {
+    padding: 0.6rem 0.2rem;
+  }
+
+  .clan-uptime-val {
+    font-size: 1.25rem;
+  }
+
+  .clan-dispatch-row {
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding-top: 1rem;
+  }
+
+  .clan-avatar-box {
+    width: 40px;
+    height: 40px;
+  }
+
+  .clan-speech-text {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .clan-uptime-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
   }
 }
 

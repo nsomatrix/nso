@@ -10,8 +10,8 @@ import {
   UptimeData,
 } from "../../utils/nsoEvents";
 
-export function ShinobiTelemetryDeck() {
-  // Chrono Uptime State
+export function ClanStatus() {
+  // 1. Chrono Uptime State
   const [uptime, setUptime] = useState<UptimeData | null>(null);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export function ShinobiTelemetryDeck() {
     return () => clearInterval(interval);
   }, []);
 
-  // Dialogues State
+  // 2. Dialogues State
   const [dialogues, setDialogues] = useState<DialogueItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [typedText, setTypedText] = useState("");
@@ -61,9 +61,9 @@ export function ShinobiTelemetryDeck() {
       return "Maintenance";
     }
     if (id.startsWith("tip-")) {
-      return "Tip";
+      return "Shinobi Tip";
     }
-    return "Announcement";
+    return "Dispatch Notice";
   }, [activeDialogue.id]);
 
   // Typewriter effect
@@ -83,7 +83,7 @@ export function ShinobiTelemetryDeck() {
         clearInterval(typingTimer);
         setIsTyping(false);
       }
-    }, 32);
+    }, 30);
 
     return () => clearInterval(typingTimer);
   }, [currentIndex, dialogues, activeDialogue]);
@@ -93,7 +93,7 @@ export function ShinobiTelemetryDeck() {
 
     const pauseTimer = setTimeout(() => {
       setCurrentIndex((prev) => (prev + 1) % dialogues.length);
-    }, 3400);
+    }, 3600);
 
     return () => clearTimeout(pauseTimer);
   }, [isTyping, dialogues.length]);
@@ -115,89 +115,84 @@ export function ShinobiTelemetryDeck() {
         { val: uptime.days, label: "DAYS" },
         { val: String(uptime.hours).padStart(2, "0"), label: "HRS" },
         { val: String(uptime.minutes).padStart(2, "0"), label: "MIN" },
-        { val: String(uptime.seconds).padStart(2, "0"), label: "SEC", isLive: true },
+        { val: String(uptime.seconds).padStart(2, "0"), label: "SEC" },
       ]
     : [];
 
   return (
-    <div className="shinobi-deck-card">
-      {/* ── HEADER ── */}
-      <div className="deck-header">
-        <span className="deck-terminal-id">Shinobi Telemetry</span>
+    <div className="clan-status-wrapper">
+      {/* ── TOP HEADER ── */}
+      <div className="clan-status-head">
+        <h2 className="clan-status-title">Clan Status</h2>
       </div>
 
-      {/* ── UPTIME ── */}
-      <div className="deck-chrono-section">
-        <div className="chrono-section-bar">
-          <span className="chrono-label">Platform Uptime</span>
-          <span className="chrono-sub-tag">Since Feb 01, 2019</span>
+      {/* ── UPTIME MODULE ── */}
+      <div className="clan-uptime-block">
+        <div className="clan-uptime-meta">
+          <span className="clan-uptime-label">Platform Uptime</span>
+          <span className="clan-uptime-sub">Since Feb 01, 2019</span>
         </div>
 
-        <div className="chrono-grid">
+        <div className="clan-uptime-grid">
           {uptime ? (
             units.map((unit) => (
-              <div
-                key={unit.label}
-                className={`chrono-cell ${unit.isLive ? "cell-live" : ""}`}
-              >
-                <span className="chrono-cell-num">{unit.val}</span>
-                <span className="chrono-cell-unit">{unit.label}</span>
+              <div key={unit.label} className="clan-uptime-cell">
+                <span className="clan-uptime-val">{unit.val}</span>
+                <span className="clan-uptime-unit">{unit.label}</span>
               </div>
             ))
           ) : (
-            <div className="chrono-loading">Loading uptime...</div>
+            <div className="clan-uptime-loading">Loading uptime...</div>
           )}
         </div>
       </div>
 
-      {/* ── SEPARATOR ── */}
-      <div className="deck-seam-divider" />
-
-      {/* ── DIALOGUE ── */}
-      <div className="deck-dialogue-section">
-        {/* Pixel Avatar Stage */}
-        <div className="deck-avatar-box">
-          <div className="avatar-pixel-frame">
-            <Image
-              src={getAssetUrl("/Pictures/char.gif")}
-              alt="Ninja Character"
-              width={64}
-              height={64}
-              unoptimized
-              className="deck-pixel-sprite"
-            />
-          </div>
+      {/* ── LIVE DISPATCH ROW ── */}
+      <div className="clan-dispatch-row">
+        <div className="clan-avatar-box">
+          <Image
+            src={getAssetUrl("/Pictures/char.gif")}
+            alt="Shinobi"
+            width={48}
+            height={48}
+            unoptimized
+            className="clan-pixel-sprite"
+          />
         </div>
 
-        {/* Transmission Speech Frame */}
-        <div className="deck-speech-box">
-          <div className="speech-meta-bar">
+        <div className="clan-dialogue-content">
+          <div className="clan-dialogue-meta">
             <span
-              className="speech-category-chip"
+              className="clan-category-chip"
               style={{
-                borderColor: activeDialogue.color !== "#ffffff" ? `${activeDialogue.color}55` : undefined,
-                color: activeDialogue.color !== "#ffffff" ? activeDialogue.color : undefined,
+                borderColor:
+                  activeDialogue.color !== "#ffffff"
+                    ? `${activeDialogue.color}66`
+                    : undefined,
+                color:
+                  activeDialogue.color !== "#ffffff"
+                    ? activeDialogue.color
+                    : undefined,
               }}
             >
               {categoryTag}
             </span>
 
-            {/* Stepper controls */}
-            <div className="deck-controls">
+            <div className="clan-stepper">
               <button
                 type="button"
-                className="deck-nav-btn"
+                className="clan-nav-btn"
                 onClick={handlePrev}
                 aria-label="Previous Dispatch"
               >
                 ‹
               </button>
-              <div className="deck-dots">
+              <div className="clan-dots">
                 {dialogues.map((d, idx) => (
                   <button
                     key={idx}
                     type="button"
-                    className={`deck-dot ${idx === currentIndex ? "active" : ""}`}
+                    className={`clan-dot ${idx === currentIndex ? "active" : ""}`}
                     onClick={() => setCurrentIndex(idx)}
                     style={
                       idx === currentIndex && d.color !== "#ffffff"
@@ -210,7 +205,7 @@ export function ShinobiTelemetryDeck() {
               </div>
               <button
                 type="button"
-                className="deck-nav-btn"
+                className="clan-nav-btn"
                 onClick={handleNext}
                 aria-label="Next Dispatch"
               >
@@ -219,19 +214,16 @@ export function ShinobiTelemetryDeck() {
             </div>
           </div>
 
-          <div className="speech-content-box">
-            <p
-              className="speech-text"
-              style={{
-                color: activeDialogue.color,
-              }}
-            >
-              {typedText}
-              <span className="speech-blinking-caret">_</span>
-            </p>
-          </div>
+          <p
+            className="clan-speech-text"
+            style={{ color: activeDialogue.color }}
+          >
+            {typedText}
+            <span className="clan-caret">_</span>
+          </p>
         </div>
       </div>
     </div>
   );
 }
+

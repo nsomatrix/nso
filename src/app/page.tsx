@@ -3,7 +3,7 @@
 import React from "react";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
-import { ShinobiTelemetryDeck } from "../components/home/ShinobiTelemetryDeck";
+import { ClanStatus } from "../components/home/ClanStatus";
 
 export default function Home() {
   return (
@@ -12,7 +12,7 @@ export default function Home() {
 
       <main className="main-content section-container home-main-content">
         <div className="hero-block-wrapper">
-          <ShinobiTelemetryDeck />
+          <ClanStatus />
         </div>
       </main>
 
