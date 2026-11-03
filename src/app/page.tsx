@@ -3,9 +3,7 @@
 import React from "react";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
-import { HomeHero } from "../components/home/HomeHero";
-import { HomeStats } from "../components/home/HomeStats";
-import { HomePortalGrid } from "../components/home/HomePortalGrid";
+import { ShinobiTelemetryDeck } from "../components/home/ShinobiTelemetryDeck";
 
 export default function Home() {
   return (
@@ -13,9 +11,9 @@ export default function Home() {
       <Header />
 
       <main className="main-content section-container home-main-content">
-        <HomeHero />
-        <HomeStats />
-        <HomePortalGrid />
+        <div className="hero-block-wrapper">
+          <ShinobiTelemetryDeck />
+        </div>
       </main>
 
       <Footer />

@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Outfit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { BHBG } from "../components/BHBG";
 
 const fontSans = Inter({
   variable: "--font-sans",
@@ -44,7 +43,6 @@ export default function RootLayout({
       className={`${fontSans.variable} ${fontDisplay.variable} ${fontMono.variable}`}
     >
       <body>
-        <BHBG />
         {children}
       </body>
     </html>
