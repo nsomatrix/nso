@@ -1513,95 +1513,32 @@ button {
 
 .shinobi-deck-card {
   width: 100%;
-  background: radial-gradient(ellipse 90% 60% at 50% -20%, rgba(220, 38, 38, 0.12), transparent 70%),
-              linear-gradient(165deg, rgba(16, 17, 28, 0.78) 0%, rgba(10, 10, 18, 0.88) 100%);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 14px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65),
-              inset 0 1px 0 rgba(255, 255, 255, 0.15),
-              0 0 0 1px rgba(0, 0, 0, 0.5);
+  background: rgba(14, 15, 22, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
   position: relative;
   overflow: hidden;
   text-align: left;
 }
 
-/* Subtle corner cyber accents */
-.shinobi-deck-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.8), rgba(56, 189, 248, 0.8), transparent);
-}
-
-/* 1. Header HUD */
+/* 1. Header */
 .deck-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.85rem 1.25rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.deck-header-left {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.deck-chakra-orb {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #ef4444;
-  box-shadow: 0 0 10px #ef4444;
-  animation: chakra-pulse 2s infinite ease-in-out;
-}
-
-@keyframes chakra-pulse {
-  0%, 100% { opacity: 0.5; transform: scale(0.9); }
-  50% { opacity: 1; transform: scale(1.2); }
+  padding: 1rem 1.25rem 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .deck-terminal-id {
   font-family: var(--font-mono), monospace;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.09em;
-  color: #e2e8f0;
-}
-
-.deck-header-right {
-  display: flex;
-  align-items: center;
-}
-
-.deck-sync-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-family: var(--font-mono), monospace;
-  font-size: 0.68rem;
+  font-size: 0.85rem;
   font-weight: 700;
-  color: #38bdf8;
-  background: rgba(56, 189, 248, 0.08);
-  border: 1px solid rgba(56, 189, 248, 0.22);
-  border-radius: 9999px;
-  padding: 0.2rem 0.6rem;
-}
-
-.sync-pulse {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #38bdf8;
-  box-shadow: 0 0 6px #38bdf8;
-  animation: beacon-pulse 1.8s infinite ease-in-out;
+  color: #f1f5f9;
+  letter-spacing: 0.02em;
 }
 
 /* 2. Chrono Section */
@@ -1618,25 +1555,15 @@ button {
 
 .chrono-label {
   font-family: var(--font-mono), monospace;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  font-weight: 600;
   color: #cbd5e1;
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.chrono-icon {
-  font-size: 0.8rem;
 }
 
 .chrono-sub-tag {
   font-family: var(--font-mono), monospace;
-  font-size: 0.66rem;
-  font-weight: 600;
+  font-size: 0.7rem;
   color: #64748b;
-  letter-spacing: 0.04em;
 }
 
 .chrono-grid {
@@ -1646,8 +1573,8 @@ button {
 }
 
 .chrono-cell {
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 8px;
   padding: 0.65rem 0.35rem;
   display: flex;
@@ -1657,38 +1584,29 @@ button {
   transition: all 0.2s ease;
 }
 
-.chrono-cell:hover {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.18);
-}
-
 .chrono-cell.cell-live {
-  background: rgba(56, 189, 248, 0.07);
-  border-color: rgba(56, 189, 248, 0.35);
-  box-shadow: 0 0 16px rgba(56, 189, 248, 0.12), inset 0 0 8px rgba(56, 189, 248, 0.06);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .chrono-cell-num {
   font-family: var(--font-mono), monospace;
   font-size: clamp(1.15rem, 2.5vw, 1.45rem);
-  font-weight: 800;
+  font-weight: 700;
   color: #ffffff;
   line-height: 1.1;
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
 }
 
 .cell-live .chrono-cell-num {
-  color: #38bdf8;
-  text-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+  color: #ffffff;
 }
 
 .chrono-cell-unit {
   font-family: var(--font-mono), monospace;
-  font-size: 0.62rem;
-  font-weight: 700;
+  font-size: 0.65rem;
+  font-weight: 600;
   color: #94a3b8;
-  letter-spacing: 0.06em;
   margin-top: 0.2rem;
 }
 
@@ -1703,26 +1621,9 @@ button {
 
 /* 3. Seam Divider */
 .deck-seam-divider {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.25rem 1.25rem;
-  opacity: 0.85;
-}
-
-.seam-line {
-  flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-}
-
-.seam-badge {
-  font-family: var(--font-mono), monospace;
-  font-size: 0.6rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: #64748b;
-  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.06);
+  margin: 0.25rem 1.25rem;
 }
 
 /* 4. Dialogue Section */
@@ -1737,22 +1638,21 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.45rem;
+  justify-content: center;
   flex-shrink: 0;
 }
 
 .avatar-pixel-frame {
   position: relative;
-  width: 72px;
-  height: 72px;
-  background: rgba(0, 0, 0, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  width: 64px;
+  height: 64px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.8);
 }
 
 .deck-pixel-sprite {
@@ -1762,34 +1662,11 @@ button {
   image-rendering: pixelated;
 }
 
-.avatar-live-indicator {
-  position: absolute;
-  top: -3px;
-  right: -3px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #51cf66;
-  box-shadow: 0 0 8px #51cf66;
-}
-
-.avatar-rank-tag {
-  font-family: var(--font-mono), monospace;
-  font-size: 0.6rem;
-  font-weight: 700;
-  color: #94a3b8;
-  letter-spacing: 0.05em;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 4px;
-  padding: 0.15rem 0.4rem;
-}
-
 .deck-speech-box {
   flex: 1;
   min-width: 0;
-  background: rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 8px;
   padding: 0.85rem 1rem;
   display: flex;
@@ -1808,14 +1685,13 @@ button {
 
 .speech-category-chip {
   font-family: var(--font-mono), monospace;
-  font-size: 0.65rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  border: 1px solid;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 4px;
   padding: 0.15rem 0.5rem;
-  background: rgba(0, 0, 0, 0.4);
-  transition: all 0.3s ease;
 }
 
 .deck-controls {
@@ -1825,12 +1701,12 @@ button {
 }
 
 .deck-nav-btn {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   color: #cbd5e1;
   border-radius: 4px;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1841,7 +1717,7 @@ button {
 }
 
 .deck-nav-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.1);
   color: #ffffff;
 }
 
@@ -1852,8 +1728,8 @@ button {
 }
 
 .deck-dot {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   border: none;
   background: rgba(255, 255, 255, 0.2);
@@ -1863,9 +1739,8 @@ button {
 }
 
 .deck-dot.active {
-  background: #ef4444;
-  box-shadow: 0 0 6px #ef4444;
-  transform: scale(1.25);
+  background: #ffffff;
+  transform: scale(1.2);
 }
 
 .speech-content-box {
@@ -1876,18 +1751,18 @@ button {
 
 .speech-text {
   font-family: var(--font-mono), monospace;
-  font-size: clamp(0.92rem, 1.8vw, 1.05rem);
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #e2e8f0;
   line-height: 1.5;
   margin: 0;
   white-space: pre-wrap;
   word-break: break-word;
-  transition: color 0.3s ease;
 }
 
 .speech-blinking-caret {
-  color: #ef4444;
-  font-weight: 900;
+  color: #94a3b8;
+  font-weight: 700;
   margin-left: 2px;
   animation: retro-blink 0.8s infinite;
 }
@@ -1895,50 +1770,6 @@ button {
 @keyframes retro-blink {
   0%, 50% { opacity: 1; }
   51%, 100% { opacity: 0; }
-}
-
-/* 5. Tactical Footer */
-.deck-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  padding: 0.65rem 1.25rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(0, 0, 0, 0.25);
-}
-
-.deck-status-item {
-  font-family: var(--font-mono), monospace;
-  font-size: 0.65rem;
-  font-weight: 600;
-  color: #64748b;
-  letter-spacing: 0.04em;
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.status-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-}
-
-.status-dot.green {
-  background: #51cf66;
-  box-shadow: 0 0 5px #51cf66;
-}
-
-.status-dot.blue {
-  background: #38bdf8;
-  box-shadow: 0 0 5px #38bdf8;
-}
-
-.status-dot.purple {
-  background: #a855f7;
-  box-shadow: 0 0 5px #a855f7;
 }
 
 /* -------------------------------------------------------------------------- */

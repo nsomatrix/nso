@@ -11,7 +11,7 @@ import {
 } from "../../utils/nsoEvents";
 
 export function ShinobiTelemetryDeck() {
-  // 1. Chrono Uptime State
+  // Chrono Uptime State
   const [uptime, setUptime] = useState<UptimeData | null>(null);
 
   useEffect(() => {
@@ -22,13 +22,12 @@ export function ShinobiTelemetryDeck() {
     return () => clearInterval(interval);
   }, []);
 
-  // 2. Live Shinobi Quest Telemetry State
+  // Dialogues State
   const [dialogues, setDialogues] = useState<DialogueItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [typedText, setTypedText] = useState("");
   const [isTyping, setIsTyping] = useState(true);
 
-  // Initialize and refresh dialogues every 30s
   useEffect(() => {
     setDialogues(generateDialogues());
     const refreshTimer = setInterval(() => {
@@ -38,32 +37,33 @@ export function ShinobiTelemetryDeck() {
   }, []);
 
   const activeDialogue = useMemo(() => {
-    return dialogues[currentIndex] || {
-      id: "welcome",
-      text: "Welcome to Matrix™",
-      color: "#ffffff" as const,
-    };
+    return (
+      dialogues[currentIndex] || {
+        id: "welcome",
+        text: "Welcome to Matrix",
+        color: "#ffffff" as const,
+      }
+    );
   }, [dialogues, currentIndex]);
 
-  // Derive human-readable category for gaming telemetry
   const categoryTag = useMemo(() => {
     const id = activeDialogue.id;
     if (id.startsWith("sb-") || id === "seven-beasts-upcoming") {
-      return "WORLD BOSS // SEVEN BEASTS";
+      return "World Boss: Seven Beasts";
     }
     if (id.startsWith("yy-")) {
-      return "PVP ARENA // YIN-YANG WAR";
+      return "Battlefield: Yin-Yang";
     }
     if (id === "server-reset") {
-      return "DAILY CYCLE // SERVER RESET";
+      return "Daily Server Reset";
     }
     if (id === "maintenance") {
-      return "MAINTENANCE // NOTICE";
+      return "Maintenance";
     }
     if (id.startsWith("tip-")) {
-      return "SHINOBI CODEX // TIP";
+      return "Tip";
     }
-    return "HEADQUARTERS // TRANSMISSION";
+    return "Announcement";
   }, [activeDialogue.id]);
 
   // Typewriter effect
@@ -88,7 +88,6 @@ export function ShinobiTelemetryDeck() {
     return () => clearInterval(typingTimer);
   }, [currentIndex, dialogues, activeDialogue]);
 
-  // Auto-advance after typewriter finishes
   useEffect(() => {
     if (isTyping || !dialogues.length) return;
 
@@ -109,7 +108,6 @@ export function ShinobiTelemetryDeck() {
     setCurrentIndex((prev) => (prev + 1) % dialogues.length);
   };
 
-  // Chrono units for display
   const units = uptime
     ? [
         { val: uptime.years, label: "YRS" },
@@ -123,27 +121,16 @@ export function ShinobiTelemetryDeck() {
 
   return (
     <div className="shinobi-deck-card">
-      {/* ── TOP HUD HEADER ── */}
+      {/* ── HEADER ── */}
       <div className="deck-header">
-        <div className="deck-header-left">
-          <span className="deck-chakra-orb" />
-          <span className="deck-terminal-id">MATRI-X // SHINOBI TELEMETRY HUD</span>
-        </div>
-        <div className="deck-header-right">
-          <span className="deck-sync-chip">
-            <span className="sync-pulse" />
-            SYNCHRONIZED (UTC)
-          </span>
-        </div>
+        <span className="deck-terminal-id">Shinobi Telemetry</span>
       </div>
 
-      {/* ── UPPER SECTION: CHRONO MATRIX (UPTIME) ── */}
+      {/* ── UPTIME ── */}
       <div className="deck-chrono-section">
         <div className="chrono-section-bar">
-          <span className="chrono-label">
-            <span className="chrono-icon">⏱</span> PLATFORM INCEPTION CHRONOMETER
-          </span>
-          <span className="chrono-sub-tag">SINCE FEB 01, 2019 • 17:05:40 UTC</span>
+          <span className="chrono-label">Platform Uptime</span>
+          <span className="chrono-sub-tag">Since Feb 01, 2019</span>
         </div>
 
         <div className="chrono-grid">
@@ -158,19 +145,15 @@ export function ShinobiTelemetryDeck() {
               </div>
             ))
           ) : (
-            <div className="chrono-loading">Connecting to Chrono Node...</div>
+            <div className="chrono-loading">Loading uptime...</div>
           )}
         </div>
       </div>
 
-      {/* ── SEAM DIVIDER ── */}
-      <div className="deck-seam-divider">
-        <span className="seam-line" />
-        <span className="seam-badge">LIVE QUEST &amp; WORLD RADAR</span>
-        <span className="seam-line" />
-      </div>
+      {/* ── SEPARATOR ── */}
+      <div className="deck-seam-divider" />
 
-      {/* ── LOWER SECTION: CHARACTER DIALOGUE & TELEMETRY ── */}
+      {/* ── DIALOGUE ── */}
       <div className="deck-dialogue-section">
         {/* Pixel Avatar Stage */}
         <div className="deck-avatar-box">
@@ -183,9 +166,7 @@ export function ShinobiTelemetryDeck() {
               unoptimized
               className="deck-pixel-sprite"
             />
-            <span className="avatar-live-indicator" />
           </div>
-          <span className="avatar-rank-tag">LV.130 SHINOBI</span>
         </div>
 
         {/* Transmission Speech Frame */}
@@ -194,9 +175,8 @@ export function ShinobiTelemetryDeck() {
             <span
               className="speech-category-chip"
               style={{
-                borderColor: `${activeDialogue.color}55`,
-                color: activeDialogue.color,
-                boxShadow: `0 0 10px ${activeDialogue.color}22`,
+                borderColor: activeDialogue.color !== "#ffffff" ? `${activeDialogue.color}55` : undefined,
+                color: activeDialogue.color !== "#ffffff" ? activeDialogue.color : undefined,
               }}
             >
               {categoryTag}
@@ -213,12 +193,17 @@ export function ShinobiTelemetryDeck() {
                 ‹
               </button>
               <div className="deck-dots">
-                {dialogues.map((_, idx) => (
+                {dialogues.map((d, idx) => (
                   <button
                     key={idx}
                     type="button"
                     className={`deck-dot ${idx === currentIndex ? "active" : ""}`}
                     onClick={() => setCurrentIndex(idx)}
+                    style={
+                      idx === currentIndex && d.color !== "#ffffff"
+                        ? { background: d.color }
+                        : undefined
+                    }
                     aria-label={`Jump to dispatch ${idx + 1}`}
                   />
                 ))}
@@ -239,7 +224,6 @@ export function ShinobiTelemetryDeck() {
               className="speech-text"
               style={{
                 color: activeDialogue.color,
-                textShadow: `0 0 12px ${activeDialogue.color}40`,
               }}
             >
               {typedText}
@@ -247,19 +231,6 @@ export function ShinobiTelemetryDeck() {
             </p>
           </div>
         </div>
-      </div>
-
-      {/* ── TACTICAL FOOTER ── */}
-      <div className="deck-footer">
-        <span className="deck-status-item">
-          <span className="status-dot green" /> CONTINUOUS OPERATION (100%)
-        </span>
-        <span className="deck-status-item">
-          <span className="status-dot blue" /> CLOUDFLARE R2 EDGE CACHED
-        </span>
-        <span className="deck-status-item">
-          <span className="status-dot purple" /> NO LOGIN REQUIRED
-        </span>
       </div>
     </div>
   );
