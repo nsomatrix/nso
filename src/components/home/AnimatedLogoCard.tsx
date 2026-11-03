@@ -14,7 +14,9 @@ export function AnimatedLogoCard() {
           width={240}
           height={80}
           priority
-          className="home-logo-graphic"
+          draggable={false}
+          onContextMenu={(e) => e.preventDefault()}
+          className="home-logo-graphic nodownload"
         />
       </div>
     </div>

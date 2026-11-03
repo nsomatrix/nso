@@ -218,15 +218,22 @@ export function generateDialogues(): DialogueItem[] {
   ];
 
   yinYangWindows.forEach((win) => {
-    const open = new Date(
+    let open = new Date(
       Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), win.openH, win.openM, 0)
     );
-    const start = new Date(
+    let start = new Date(
       Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), win.startH, win.startM, 0)
     );
-    const end = new Date(
+    let end = new Date(
       Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), win.endH, win.endM, 0)
     );
+
+    // If today's battle window has already concluded, schedule it for tomorrow
+    if (now >= end) {
+      open = new Date(open.getTime() + 86400000);
+      start = new Date(start.getTime() + 86400000);
+      end = new Date(end.getTime() + 86400000);
+    }
 
     if (now < open) {
       const diff = open.getTime() - now.getTime();
@@ -251,18 +258,6 @@ export function generateDialogues(): DialogueItem[] {
         color: "#ff6b6b",
       });
     }
-  });
-
-  // 6. Practical Ninja Farm Tip
-  dialogues.push({
-    id: "tip-accounts",
-    text: "More than 4 accounts per device will result in reduced grind!",
-    color: "#ffffff",
-  });
-  dialogues.push({
-    id: "tip-goodluck",
-    text: "Good luck!",
-    color: "#ffffff",
   });
 
   return dialogues;

@@ -180,21 +180,18 @@ export function ClanStatus({ avatarSrc, avatars = CLAN_AVATARS }: ClanStatusProp
   const categoryTag = useMemo(() => {
     const id = activeDialogue.id;
     if (id.startsWith("sb-") || id === "seven-beasts-upcoming") {
-      return "World Boss: Seven Beasts";
+      return "Seven Beasts";
     }
     if (id.startsWith("yy-")) {
-      return "Battlefield: Yin-Yang";
+      return "Yin-Yang";
     }
     if (id === "server-reset") {
-      return "Daily Server Reset";
+      return "Server Reset";
     }
     if (id === "maintenance") {
       return "Maintenance";
     }
-    if (id.startsWith("tip-")) {
-      return "Shinobi Tip";
-    }
-    return "Dispatch Notice";
+    return "Notice";
   }, [activeDialogue.id]);
 
   // Typewriter effect
@@ -336,7 +333,9 @@ export function ClanStatus({ avatarSrc, avatars = CLAN_AVATARS }: ClanStatusProp
               width={72}
               height={72}
               unoptimized
-              className="clan-pixel-sprite"
+              draggable={false}
+              onContextMenu={(e) => e.preventDefault()}
+              className="clan-pixel-sprite nodownload"
             />
           </div>
 

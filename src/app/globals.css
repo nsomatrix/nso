@@ -143,6 +143,18 @@ button {
   display: block;
 }
 
+.nodownload,
+img.nodownload,
+.clan-pixel-sprite,
+.home-logo-graphic,
+.brand-logo-img {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  pointer-events: auto;
+  -webkit-user-drag: none;
+}
+
 .desktop-nav {
   display: flex;
   align-items: center;

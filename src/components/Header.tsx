@@ -29,8 +29,10 @@ export function Header() {
             alt="Brand Logo"
             width={190}
             height={56}
-            className="brand-logo-img"
+            className="brand-logo-img nodownload"
             priority
+            draggable={false}
+            onContextMenu={(e) => e.preventDefault()}
           />
         </Link>
 
